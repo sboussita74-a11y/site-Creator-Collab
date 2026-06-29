@@ -5,7 +5,7 @@
 :root {
     /* Couleurs (Le noir a été drastiquement réduit) */
     --clr-red: #E62222;
-    --clr-red-hero: #C11515; /* Rouge légèrement assombri pour le fond Hero */
+    --clr-red-hero: #ff0000; /* Rouge légèrement assombri pour le fond Hero */
     --clr-red-light: #FF3B3B;
     --clr-red-dark: #f40000; /* Pour le footer, au lieu du noir */
     --clr-red-bg: #FFF0F0;
