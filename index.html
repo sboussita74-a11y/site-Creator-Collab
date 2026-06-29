@@ -3,77 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Creator Collab — Propulse tes projets visuels et audio</title>
+    <title>Creator Collab — Plateforme d'Entraide pour Créateurs de Contenu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div class="ambient-glow"></div>
+
     <nav class="navbar">
         <div class="nav-container">
-            <div class="nav-logo">
-                <div class="logo-badge">CC</div>
+            <a href="#" class="nav-logo">
+                <div class="logo-icon-sim">CC</div>
                 <span class="logo-text">Creator<span>Collab</span></span>
-            </div>
+            </a>
             
-            <ul class="nav-links">
-                <li><a href="#concept" class="active">Concept</a></li>
-                <li><a href="#collaborer">Collaborer</a></li>
-                <li><a href="#projets">Projets</a></li>
-                <li><a href="#evenements">Événements</a></li>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active">Accueil</a></li>
+                <li><a href="#concept" class="nav-link">Concept</a></li>
+                <li><a href="#collaborer" class="nav-link">Collaborations</a></li>
+                <li><a href="#evenements" class="nav-link">Événements</a></li>
+                <li><a href="#discord" class="nav-link">Discord</a></li>
             </ul>
 
-            <div class="nav-actions">
-                <button class="btn btn-black" id="btn-connexion">Connexion</button>
+            <div class="nav-cta">
+                <button class="btn btn-connexion" id="btn-login">Connexion</button>
             </div>
+            
+            <button class="menu-toggle" id="mobile-menu-btn" aria-label="Ouvrir le menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
     </nav>
 
     <header class="hero">
         <div class="hero-container">
-            <div class="hero-logo-wrapper">
-                <img src="image_cb2c45.jpg" alt="Creator Collab Logo" class="official-logo">
+            <div class="hero-logo-frame reveal">
+                <img src="image_cb2c45.jpg" alt="Creator Collab Logo Officiel" class="hero-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
+                <div class="logo-reflection"></div>
             </div>
             
-            <h1 class="hero-title">LÀ OÙ LES CRÉATEURS <br><span class="text-stroke">DEVIENNENT UNE ÉQUIPE.</span></h1>
-            <p class="hero-subtitle">
-                Fini de créer en solo. Connecte-toi avec des YouTubers, Streamers, Monteurs, Graphistes et Développeurs pour propulser tes projets vers un autre niveau.
+            <h1 class="hero-title reveal">
+                PROPULSE TES PROJETS <br>
+                <span class="highlight-text">AVEC LES MEILLEURS CRÉATEURS</span>
+            </h1>
+            
+            <p class="hero-subtitle reveal">
+                La plateforme d'entraide et de synergie conçue pour les YouTubers, Streamers, Monteurs, Graphistes et Développeurs. Connecte tes compétences, casse la solitude et crée sans limites.
             </p>
             
-            <div class="hero-buttons">
-                <button class="btn btn-blue btn-large" data-action="discord">Rejoindre le Discord</button>
-                <button class="btn btn-white btn-large" data-action="decouvrir">Découvrir la communauté</button>
+            <div class="hero-actions reveal">
+                <button class="btn btn-primary btn-blue" data-action="discord">
+                    <span>Rejoindre le Discord</span>
+                </button>
+                <button class="btn btn-secondary btn-white" data-action="concept">
+                    <span>Découvrir la plateforme</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <main class="content-sections">
+    <main class="main-content">
+        <section id="concept" class="presentation-section scroll-reveal">
+            <div class="container">
+                <div class="section-badge-wrapper">
+                    <span class="ui-badge">L'Écosystème</span>
+                </div>
+                <h2 class="section-headline">Pourquoi Creator Collab ?</h2>
+                <p class="section-paragraph">
+                    Créer du contenu est une aventure passionnante, mais souvent solitaire. Trouver un monteur de confiance, un graphiste qui comprend ton univers ou un développeur pour tes extensions de stream relève souvent du parcours du combattant. Creator Collab centralise les forces vives du web pour transformer tes idées isolées en succès collectifs.
+                </p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper red-tint">🛠️</div>
+                        <h3>Synergie de Compétences</h3>
+                        <p>Fais correspondre instantanément tes besoins créatifs avec les talents disponibles au sein de la communauté.</p>
+                    </div>
+                    </div>
+            </div>
+        </section>
         
-        <section id="collaborer" class="section-block bg-white">
-            <div class="section-grid">
-                <div class="section-info">
-                    <span class="badge badge-red">L'Entraide</span>
-                    <h2 class="section-title">Trouve tes futurs partenaires de création</h2>
-                    <p class="section-text">
-                        Que tu cherches un monteur vidéo dynamique, un motion designer talentueux, un community manager ou un développeur pour tes outils de stream, l'espace Creator Collab te met en relation directe avec des profils qualifiés prêts à s'investir.
+        <section id="collaborer" class="presentation-section alt-bg scroll-reveal">
+            <div class="container grid-two-columns">
+                <div class="text-block">
+                    <span class="ui-badge badge-blue">Synergie</span>
+                    <h2 class="section-headline text-dark">Trouve tes partenaires de création</h2>
+                    <p class="section-paragraph text-dark">
+                        Explorez des profils qualifiés grâce à notre futur système de filtres intuitifs. Que vous ayez besoin d'un coup de main ponctuel sur un montage complexe ou d'un directeur artistique à long terme, l'espace d'échange clarifie les attentes mutuelles pour bâtir des binômes solides.
                     </p>
-                    <button class="btn btn-red" data-action="simuler">Trouver un profil</button>
+                    <button class="btn btn-primary btn-red" data-action="simuler">Découvrir l'espace talents</button>
                 </div>
-                <div class="section-visual">
-                    <div class="cartoon-card placeholder-card">
-                        <div class="placeholder-header">
-                            <div class="placeholder-avatar"></div>
-                            <div class="placeholder-lines">
-                                <div class="line short"></div>
-                                <div class="line"></div>
+                
+                <div class="visual-block">
+                    <div class="demo-box-container">
+                        <div class="demo-ribbon">Espace Démo</div>
+                        <div class="demo-card-skeleton">
+                            <div class="skeleton-header">
+                                <div class="skeleton-avatar"></div>
+                                <div class="skeleton-title-group">
+                                    <div class="sk-line width-60"></div>
+                                    <div class="sk-line width-40"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="placeholder-body">
-                            <div class="tag-row">
-                                <span class="mini-tag">#Monteur</span>
-                                <span class="mini-tag">#YouTube</span>
+                            <div class="skeleton-tags">
+                                <span class="sk-tag">#Monteur</span>
+                                <span class="sk-tag">#MotionDesign</span>
                             </div>
                         </div>
                     </div>
@@ -81,62 +119,19 @@
             </div>
         </section>
 
-        <section id="projets" class="section-block bg-light-red">
-            <div class="section-grid reverse">
-                <div class="section-info">
-                    <span class="badge badge-blue">Synergie</span>
-                    <h2 class="section-title">Lance et rejoins des projets ambitieux</h2>
-                    <p class="section-text">
-                        Tu as une idée de concept vidéo, de court-métrage ou d'événement gaming ? Crée une fiche de projet claire, liste les compétences dont tu as besoin et reçois les propositions de la communauté. 
-                    </p>
-                    <button class="btn btn-blue" data-action="simuler">Créer un projet</button>
-                </div>
-                <div class="section-visual">
-                    <div class="cartoon-card placeholder-card visual-accent">
-                        <div class="placeholder-box">
-                            <div class="placeholder-icon">🎬</div>
-                            <div class="line short center"></div>
-                            <div class="line long"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="evenements" class="section-block bg-white">
-            <div class="section-grid">
-                <div class="section-info">
-                    <span class="badge badge-black">Communauté</span>
-                    <h2 class="section-title">Le prolongement direct de notre serveur Discord</h2>
-                    <p class="section-text">
-                        Le serveur Discord reste le cœur battant de notre communauté. Le site web vient structurer, archiver et clarifier les demandes pour t'éviter de te perdre dans le flux constant des salons textuels. Participe également à nos sessions de brainstorming et revues de projets en direct.
-                    </p>
-                    <button class="btn btn-black" data-action="discord">Ouvrir Discord</button>
-                </div>
-                <div class="section-visual">
-                    <div class="discord-mockup-card">
-                        <div class="mockup-header">
-                            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                        </div>
-                        <div class="mockup-content">
-                            <div class="mockup-item active-item"># 🤝-recrutement-monteurs</div>
-                            <div class="mockup-item"># 🎨-partage-graphismes</div>
-                            <div class="mockup-item"># 🚀-projets-communs</div>
-                        </div>
-                    </div>
+        <section id="discord" class="presentation-section discord-section scroll-reveal">
+            <div class="container text-center">
+                <div class="discord-logo-glow">💬</div>
+                <h2 class="section-headline">Le cœur de la communauté bat sur Discord</h2>
+                <p class="section-paragraph max-width-700 margin-auto">
+                    Le serveur Discord reste l'épicentre des conversations en temps réel. Cette plateforme web officielle vient s'y adosser comme un outil de structuration premium pour archiver, clarifier et pérenniser vos projets.
+                </p>
+                <div class="margin-top-40">
+                    <button class="btn btn-primary btn-white btn-large" data-action="discord">Rejoindre le serveur officiel</button>
                 </div>
             </div>
         </section>
     </main>
-
-    <footer class="main-footer">
-        <div class="footer-container">
-            <p>&copy; 2026 Creator Collab. Plateforme gratuite pour les créateurs de contenu.</p>
-            <div class="footer-status">
-                <span class="status-indicator"></span> Statut de l'infrastructure : Opérationnel
-            </div>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
