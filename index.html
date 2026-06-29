@@ -11,12 +11,10 @@
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
-
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo">
-                <div class="logo-icon-sim">CC</div>
+                <img src="image_cb2c45.jpg" alt="Creator Collab" class="nav-logo-img" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
                 <span class="logo-text">Creator<span>Collab</span></span>
             </a>
             
@@ -41,10 +39,15 @@
     </nav>
 
     <header class="hero">
+        <div class="hero-rays"></div>
+        
+        <div class="glow-point glow-1"></div>
+        <div class="glow-point glow-2"></div>
+        <div class="glow-point glow-3"></div>
+
         <div class="hero-container">
             <div class="hero-logo-frame reveal">
                 <img src="image_cb2c45.jpg" alt="Creator Collab Logo Officiel" class="hero-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
-                <div class="logo-reflection"></div>
             </div>
             
             <h1 class="hero-title reveal">
@@ -77,30 +80,41 @@
                 <p class="section-paragraph">
                     Créer du contenu est une aventure passionnante, mais souvent solitaire. Trouver un monteur de confiance, un graphiste qui comprend ton univers ou un développeur pour tes extensions de stream relève souvent du parcours du combattant. Creator Collab centralise les forces vives du web pour transformer tes idées isolées en succès collectifs.
                 </p>
+                
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon-wrapper red-tint">🛠️</div>
                         <h3>Synergie de Compétences</h3>
                         <p>Fais correspondre instantanément tes besoins créatifs avec les talents disponibles au sein de la communauté.</p>
                     </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper blue-tint">🤝</div>
+                        <h3>Entraide Gratuite</h3>
+                        <p>Une plateforme pensée par des créateurs, pour des créateurs. Aucun business modèle lourd, juste de la collaboration pure.</p>
                     </div>
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper grey-tint">⚡</div>
+                        <h3>Gain de Temps</h3>
+                        <p>Structure tes demandes de projets pour recevoir directement les profils les plus pertinents et motivés.</p>
+                    </div>
+                </div>
             </div>
         </section>
-        
+
         <section id="collaborer" class="presentation-section alt-bg scroll-reveal">
             <div class="container grid-two-columns">
                 <div class="text-block">
                     <span class="ui-badge badge-blue">Synergie</span>
                     <h2 class="section-headline text-dark">Trouve tes partenaires de création</h2>
                     <p class="section-paragraph text-dark">
-                        Explorez des profils qualifiés grâce à notre futur système de filtres intuitifs. Que vous ayez besoin d'un coup de main ponctuel sur un montage complexe ou d'un directeur artistique à long terme, l'espace d'échange clarifie les attentes mutuelles pour bâtir des binômes solides.
+                        Explorez des profils qualifiés grâce à notre futur système de filtres intuitifs. L'espace d'échange clarifie les attentes mutuelles pour bâtir des binômes solides.
                     </p>
                     <button class="btn btn-primary btn-red" data-action="simuler">Découvrir l'espace talents</button>
                 </div>
                 
                 <div class="visual-block">
                     <div class="demo-box-container">
-                        <div class="demo-ribbon">Espace Démo</div>
+                        <div class="demo-ribbon">Démo</div>
                         <div class="demo-card-skeleton">
                             <div class="skeleton-header">
                                 <div class="skeleton-avatar"></div>
@@ -113,6 +127,40 @@
                                 <span class="sk-tag">#Monteur</span>
                                 <span class="sk-tag">#MotionDesign</span>
                             </div>
+                            <div class="skeleton-body">
+                                <div class="sk-line"></div>
+                                <div class="sk-line width-80"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projets" class="presentation-section scroll-reveal">
+            <div class="container grid-two-columns reverse">
+                <div class="text-block">
+                    <span class="ui-badge">Structure</span>
+                    <h2 class="section-headline">Organise et lance tes idées</h2>
+                    <p class="section-paragraph">
+                        Crée une fiche projet limpide, spécifie les profils recherchés (Monteurs, Graphistes, Codeurs) et centralise les candidatures de manière structurée.
+                    </p>
+                    <button class="btn btn-primary btn-blue" data-action="simuler">Lancer un projet</button>
+                </div>
+                
+                <div class="visual-block">
+                    <div class="demo-box-container abstract-visual">
+                        <div class="demo-ribbon">Aperçu Visuel</div>
+                        <div class="abstract-project-board">
+                            <div class="board-column">
+                                <div class="board-header-sk">Recherche</div>
+                                <div class="board-item-sk"></div>
+                                <div class="board-item-sk"></div>
+                            </div>
+                            <div class="board-column">
+                                <div class="board-header-sk">En cours</div>
+                                <div class="board-item-sk active-sk"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -124,7 +172,7 @@
                 <div class="discord-logo-glow">💬</div>
                 <h2 class="section-headline">Le cœur de la communauté bat sur Discord</h2>
                 <p class="section-paragraph max-width-700 margin-auto">
-                    Le serveur Discord reste l'épicentre des conversations en temps réel. Cette plateforme web officielle vient s'y adosser comme un outil de structuration premium pour archiver, clarifier et pérenniser vos projets.
+                    Le serveur Discord reste l'épicentre des conversations en temps réel. Cette plateforme web officielle vient s'y adosser comme un outil de structuration premium pour archiver et clarifier vos projets.
                 </p>
                 <div class="margin-top-40">
                     <button class="btn btn-primary btn-white btn-large" data-action="discord">Rejoindre le serveur officiel</button>
@@ -132,6 +180,18 @@
             </div>
         </section>
     </main>
+
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-text">Creator<span>Collab</span></span>
+                <p>Espace officiel d'entraide pour les acteurs de la création numérique.</p>
+            </div>
+            <div class="footer-meta">
+                <p>&copy; 2026 Creator Collab. Plateforme gratuite, sans abonnement.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
