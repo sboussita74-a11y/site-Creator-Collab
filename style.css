@@ -1,10 +1,10 @@
 /* ==========================================================================
-   CHARTE ARTISTIQUE CREATOR COLLAB (V1.2 - Finitions Graphiques)
+   CHARTE ARTISTIQUE CREATOR COLLAB (V1.3 - Peaufinage & Séparations)
    ========================================================================== */
 
 :root {
-    --clr-red: #E62222;          /* Rouge vif officiel et dynamique */
-    --clr-red-hero: #E62222;     /* Harmonisé sur le rouge vif selon la demande */
+    --clr-red: #E62222;
+    --clr-red-hero: #E62222;
     --clr-red-light: #FF4D4D;
     --clr-red-dark: #A31414;
     --clr-red-bg: #FFF0F0;
@@ -90,7 +90,6 @@ body {
     color: var(--clr-white);
 }
 
-/* Contour blanc discret sur le logo nav */
 .nav-logo-img {
     height: 34px;
     width: auto;
@@ -197,14 +196,14 @@ body {
 
 /* HERO SECTION */
 .hero {
-    padding: 150px 24px 120px 24px; /* Ajusté pour centrer le bloc verticalement */
+    padding: 140px 24px 120px 24px;
     text-align: center;
     position: relative;
     background-color: var(--clr-red-hero);
     overflow: hidden;
 }
 
-/* Rayons radiaux revus : moins nombreux, plus larges, parfaitement centrés sur le logo */
+/* Rayons de l'arrière-plan (+20% de rayons, intervalle réduit à 12.5deg pour combler les vides) */
 .hero-rays {
     position: absolute;
     top: 50%;
@@ -212,24 +211,22 @@ body {
     width: 3000px;
     height: 3000px;
     transform: translate(-50%, -50%);
-    /* Rayons plus épais et espacés (3deg de couleur, 12deg transparent) */
-    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.06) 0deg, rgba(255,255,255,0.06) 3deg, transparent 3deg, transparent 15deg);
+    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.06) 0deg, rgba(255,255,255,0.06) 2.5deg, transparent 2.5deg, transparent 12.5deg);
     mask-image: radial-gradient(circle at center, black 10%, transparent 50%);
     -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 50%);
     pointer-events: none;
-    z-index: -1; /* Placé derrière l'image du logo mais encapsulé dans la frame */
+    z-index: -1;
 }
 
-/* Nouveaux reflets ciselés à 4 pointes (losanges géométriques) */
+/* Étoiles en losange avec glow blanc enrichi et concentré */
 .sparkle {
     position: absolute;
     width: 14px;
     height: 14px;
     background-color: var(--clr-white);
-    /* Découpe précise en forme d'étoile à 4 branches épaisses/losange */
     clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
-    /* Glow blanc concentré tout autour */
-    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 1)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
+    /* Boost du rayonnement lumineux blanc autour des branches */
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.3));
     z-index: 2;
     pointer-events: none;
 }
@@ -244,23 +241,23 @@ body {
     z-index: 3;
 }
 
-/* Frame du logo agrandie et positionnée au pixel près */
+/* Frame du logo agrandie d'environ 20% (200px) et abaissée de façon fluide pour parfait centrage */
 .hero-logo-frame {
     display: inline-block;
     position: relative;
-    margin-bottom: 36px; /* Ajustement de l'espace pour équilibrer la mise au point */
-    width: 165px;
-    height: 165px;
+    margin-top: 20px; /* Descente calculée pour recentrer la composition */
+    margin-bottom: 40px;
+    width: 200px;
+    height: 200px;
 }
 
-/* Logo principal sublimé */
 .hero-logo {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 32px; /* Adapté au format du logo */
-    border: 4px solid var(--clr-white); /* Contour blanc discret et propre */
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18); /* Ombre portée douce pour détacher du fond */
+    border-radius: 38px;
+    border: 4px solid var(--clr-white);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
     position: relative;
     z-index: 2;
 }
@@ -295,6 +292,22 @@ body {
     position: relative;
     z-index: 4;
     background-color: var(--clr-red);
+}
+
+/* Traitement de la deuxième section (Pourquoi Creator Collab) sur fond entièrement blanc */
+#concept {
+    background-color: var(--clr-white);
+}
+#concept .section-headline {
+    color: var(--clr-text-dark);
+}
+#concept .section-paragraph {
+    color: var(--clr-text-muted);
+}
+#concept .ui-badge {
+    background-color: rgba(230, 34, 34, 0.08);
+    color: var(--clr-red);
+    border-color: rgba(230, 34, 34, 0.18);
 }
 
 .alt-bg { background-color: var(--clr-red-bg); }
@@ -395,7 +408,7 @@ body {
 @media (max-width: 992px) {
     .hero-title { font-size: 2.8rem; }
     .grid-two-columns, .grid-two-columns.reverse { grid-template-columns: 1fr; gap: 48px; }
-    .grid-two-columns.reverse .text-block { order: 0; }
+    .grid-two-columns.reverse .text-block { order: 2; }
     .visual-block { order: 2; }
 }
 @media (max-width: 768px) {
