@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. ANIMATION NAVBAR (Changée en rouge via CSS)
+    // 2. ANIMATION NAVBAR (Teinte rouge transparente au scroll)
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 40) {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. SCROLL REVEAL (Apparitions)
+    // 3. SCROLL REVEAL (Apparitions fluides)
     const itemsToReveal = document.querySelectorAll('.scroll-reveal, .reveal');
     const revealOnScrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealOnScrollObserver.observe(item);
     });
 
-    // 4. BOUTONS
+    // 4. BOUTONS ACTIONS INTERACTIFS
     const actionButtons = document.querySelectorAll('[data-action], #btn-login');
     actionButtons.forEach(button => {
         button.addEventListener('click', (e) => {

@@ -1,13 +1,12 @@
 /* ==========================================================================
-   CHARTE ARTISTIQUE CREATOR COLLAB (V1.1 - Corrections)
+   CHARTE ARTISTIQUE CREATOR COLLAB (V1.2 - Finitions Graphiques)
    ========================================================================== */
 
 :root {
-    /* Couleurs (Le noir a été drastiquement réduit) */
-    --clr-red: #E62222;
-    --clr-red-hero: #ff0000; /* Rouge légèrement assombri pour le fond Hero */
-    --clr-red-light: #FF3B3B;
-    --clr-red-dark: #f40000; /* Pour le footer, au lieu du noir */
+    --clr-red: #E62222;          /* Rouge vif officiel et dynamique */
+    --clr-red-hero: #E62222;     /* Harmonisé sur le rouge vif selon la demande */
+    --clr-red-light: #FF4D4D;
+    --clr-red-dark: #A31414;
     --clr-red-bg: #FFF0F0;
     --clr-blue: #2A64FF;
     --clr-blue-hover: #1A53E6;
@@ -70,8 +69,8 @@ body {
 }
 
 .navbar.scrolled {
-    background: rgba(193, 21, 21, 0.95); /* Rouge cohérent, fini le noir */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(230, 34, 34, 0.96);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .nav-container {
@@ -91,10 +90,13 @@ body {
     color: var(--clr-white);
 }
 
+/* Contour blanc discret sur le logo nav */
 .nav-logo-img {
-    height: 32px;
+    height: 34px;
     width: auto;
-    border-radius: 6px;
+    border-radius: 8px;
+    border: 2px solid var(--clr-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .logo-text {
@@ -193,65 +195,74 @@ body {
 }
 .badge-blue { background-color: rgba(42, 100, 255, 0.1); color: var(--clr-blue); border-color: rgba(42, 100, 255, 0.2); }
 
-/* HERO SECTION (Fond plus sombre, Rayons radiaux, Reflets) */
+/* HERO SECTION */
 .hero {
-    padding: 120px 24px 120px 24px; /* Ajusté pour la navbar fixed */
+    padding: 150px 24px 120px 24px; /* Ajusté pour centrer le bloc verticalement */
     text-align: center;
     position: relative;
-    background-color: var(--clr-red-hero); /* Fond assombri */
-    overflow: hidden; /* Empêche les rayons de déborder */
+    background-color: var(--clr-red-hero);
+    overflow: hidden;
 }
 
+/* Rayons radiaux revus : moins nombreux, plus larges, parfaitement centrés sur le logo */
 .hero-rays {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 200vw;
-    height: 200vw;
+    width: 3000px;
+    height: 3000px;
     transform: translate(-50%, -50%);
-    /* Rayons ultra fins, opacité 5% environ */
-    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.06) 0deg, rgba(255,255,255,0.06) 0.5deg, transparent 0.5deg, transparent 2deg);
-    /* Fondu progressif vers l'extérieur pour ne pas surcharger */
-    mask-image: radial-gradient(circle at center, black 15%, transparent 60%);
-    -webkit-mask-image: radial-gradient(circle at center, black 15%, transparent 60%);
+    /* Rayons plus épais et espacés (3deg de couleur, 12deg transparent) */
+    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.06) 0deg, rgba(255,255,255,0.06) 3deg, transparent 3deg, transparent 15deg);
+    mask-image: radial-gradient(circle at center, black 10%, transparent 50%);
+    -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 50%);
     pointer-events: none;
-    z-index: 1;
+    z-index: -1; /* Placé derrière l'image du logo mais encapsulé dans la frame */
 }
 
-/* Points lumineux doux (Reflets) */
-.glow-point {
+/* Nouveaux reflets ciselés à 4 pointes (losanges géométriques) */
+.sparkle {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: #fff;
-    border-radius: 50%;
-    filter: blur(6px); /* Très flouté pour un halo discret */
-    box-shadow: 0 0 30px 20px rgba(255,255,255,0.3);
+    width: 14px;
+    height: 14px;
+    background-color: var(--clr-white);
+    /* Découpe précise en forme d'étoile à 4 branches épaisses/losange */
+    clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
+    /* Glow blanc concentré tout autour */
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 1)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.6));
     z-index: 2;
     pointer-events: none;
 }
-.glow-1 { top: 25%; left: 20%; }
-.glow-2 { top: 75%; right: 15%; }
-.glow-3 { top: 35%; right: 25%; opacity: 0.6; }
+.sparkle-1 { top: 28%; left: 22%; transform: scale(1.1); }
+.sparkle-2 { top: 72%; right: 18%; transform: scale(0.9); }
+.sparkle-3 { top: 40%; right: 26%; transform: scale(0.7); opacity: 0.8; }
 
 .hero-container {
     max-width: 950px;
     margin: 0 auto;
     position: relative;
-    z-index: 3; /* Par-dessus les rayons */
+    z-index: 3;
 }
 
-/* Logo pur (Plus de lueur ajoutée en CSS) */
+/* Frame du logo agrandie et positionnée au pixel près */
 .hero-logo-frame {
     display: inline-block;
-    margin-bottom: 24px;
+    position: relative;
+    margin-bottom: 36px; /* Ajustement de l'espace pour équilibrer la mise au point */
+    width: 165px;
+    height: 165px;
 }
 
+/* Logo principal sublimé */
 .hero-logo {
-    max-width: 140px;
-    height: auto;
-    border-radius: var(--radius-lg);
-    /* Le logo vit par lui-même */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 32px; /* Adapté au format du logo */
+    border: 4px solid var(--clr-white); /* Contour blanc discret et propre */
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18); /* Ombre portée douce pour détacher du fond */
+    position: relative;
+    z-index: 2;
 }
 
 .hero-title {
@@ -316,11 +327,11 @@ body {
 }
 .red-tint { background-color: #FFEBEB; }
 .blue-tint { background-color: #EBF0FF; }
-.grey-tint { background-color: #F1F3F5; } /* Remplacé le gris trop sombre par un gris léger */
+.grey-tint { background-color: #F1F3F5; }
 .feature-card h3 { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 12px; }
 .feature-card p { color: var(--clr-text-muted); font-size: 0.95rem; }
 
-/* ESPACES DÉMOS (Squelettes UI purs) */
+/* ESPACES DÉMOS */
 .visual-block { display: flex; justify-content: center; }
 .demo-box-container {
     width: 100%; max-width: 440px; background: var(--clr-white);
@@ -351,7 +362,7 @@ body {
 
 /* DISCORD */
 .discord-section {
-    background: var(--clr-red-hero); /* Pour rester cohérent et éviter de multiplier les teintes foncées */
+    background: var(--clr-red-dark);
     text-align: center;
     padding-top: 80px; padding-bottom: 100px;
 }
@@ -360,11 +371,12 @@ body {
 .margin-auto { margin: 0 auto; }
 .margin-top-40 { margin-top: 40px; }
 
-/* FOOTER (Nettoyé du noir, passage au rouge profond) */
+/* FOOTER */
 .site-footer {
     background-color: var(--clr-red-dark);
     color: rgba(255, 255, 255, 0.85);
     padding: 60px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
 }
 .footer-container {
     max-width: 1200px; margin: 0 auto; padding: 0 24px;
@@ -389,7 +401,7 @@ body {
 @media (max-width: 768px) {
     .nav-menu {
         display: none; position: absolute; top: 100%; left: 0; width: 100%;
-        background: var(--clr-red-hero); flex-direction: column; padding: 24px; gap: 16px;
+        background: var(--clr-red); flex-direction: column; padding: 24px; gap: 16px;
     }
     .nav-menu.mobile-open { display: flex; }
     .menu-toggle { display: flex; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
