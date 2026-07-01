@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CHARTE ARTISTIQUE CREATOR COLLAB (V1.3 - Ajustements Hero & Sections)
+   CHARTE ARTISTIQUE CREATOR COLLAB (V1.4 - Finitions Premium)
    ========================================================================== */
 
 :root {
@@ -22,7 +22,7 @@
     --shadow-btn-hover: inset 0 -4px 0 rgba(0,0,0,0.18), inset 0 4px 0 rgba(255,255,255,0.35), 0 12px 32px rgba(0,0,0,0.12);
     
     --radius-lg: 24px;
-    --radius-md: 16px;
+    --radius-md: 16px; /* Utilisé pour la forme modernisée de la nav */
     --radius-sm: 10px;
     --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -54,32 +54,37 @@ body {
     z-index: 2;
 }
 
-/* NAVIGATION */
+/* NAVIGATION (Modernisée, conteneur flottant avec transparence accrue) */
 .navbar {
-    background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     position: fixed;
-    width: 100%;
+    /* Transformation en grand bloc flottant */
     top: 0;
+    left: 0;
+    right: 0;
+    width: calc(100% - 48px);
+    max-width: 1200px;
+    margin: 20px auto 0 auto;
+    border-radius: var(--radius-md); /* 16px : forme moins arrondie qu'une pilule */
     z-index: 100;
-    padding: 16px 0;
+    padding: 12px 0;
     transition: var(--transition-smooth);
 }
 
 .navbar.scrolled {
-    background: rgba(230, 34, 34, 0.96);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(230, 34, 34, 0.75); /* Légèrement plus transparent pour rester moderne */
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 24px;
 }
 
 .nav-logo {
@@ -88,14 +93,23 @@ body {
     gap: 12px;
     text-decoration: none;
     color: var(--clr-white);
+    /* Zone interactive élargie pour faciliter le hover */
+    padding: 4px; 
 }
 
+/* Animations survol de la navigation */
 .nav-logo-img {
     height: 34px;
     width: auto;
     border-radius: 8px;
     border: 2px solid var(--clr-white);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease;
+}
+
+.nav-logo:hover .nav-logo-img {
+    transform: scale(1.08) rotate(-2deg);
+    box-shadow: 0 6px 14px rgba(255, 255, 255, 0.3);
 }
 
 .logo-text {
@@ -103,11 +117,21 @@ body {
     font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -0.5px;
+    transition: text-shadow 0.4s ease, opacity 0.4s ease;
+}
+
+.nav-logo:hover .logo-text {
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
 }
 
 .logo-text span {
     color: var(--clr-white);
     opacity: 0.8;
+    transition: opacity 0.4s ease;
+}
+
+.nav-logo:hover .logo-text span {
+    opacity: 1;
 }
 
 .nav-menu {
@@ -196,14 +220,14 @@ body {
 
 /* HERO SECTION */
 .hero {
-    padding: 150px 24px 120px 24px; 
+    padding: 160px 24px 120px 24px; 
     text-align: center;
     position: relative;
     background-color: var(--clr-red-hero);
     overflow: hidden;
 }
 
-/* Rayons radiaux densifiés (+20%) */
+/* Rayons : Espace comblé (9deg) et opacité augmentée (0.08) */
 .hero-rays {
     position: absolute;
     top: 50%;
@@ -211,23 +235,22 @@ body {
     width: 3000px;
     height: 3000px;
     transform: translate(-50%, -50%);
-    /* L'espace transparent passe de 15deg à 12deg pour multiplier le nombre de rayons */
-    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.06) 0deg, rgba(255,255,255,0.06) 3deg, transparent 3deg, transparent 12deg);
+    background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.08) 0deg, rgba(255,255,255,0.08) 3deg, transparent 3deg, transparent 9deg);
     mask-image: radial-gradient(circle at center, black 10%, transparent 50%);
     -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 50%);
     pointer-events: none;
     z-index: -1;
 }
 
-/* Reflets avec un glow renforcé */
+/* Étoiles avec Glow intense */
 .sparkle {
     position: absolute;
     width: 14px;
     height: 14px;
     background-color: var(--clr-white);
     clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%);
-    /* Glow blanc plus intense et diffus */
-    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 1)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 30px rgba(255, 255, 255, 0.6));
+    /* Glow renforcé */
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 1)) drop-shadow(0 0 12px rgba(255, 255, 255, 0.9)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.7));
     z-index: 2;
     pointer-events: none;
 }
@@ -242,26 +265,41 @@ body {
     z-index: 3;
 }
 
-/* Frame du logo agrandie et recentrée verticalement */
 .hero-logo-frame {
     display: inline-block;
     position: relative;
-    margin-top: 15px;      /* Pour l'abaisser légèrement */
-    margin-bottom: 30px;   /* Ajustement suite à l'agrandissement */
-    width: 200px;          /* Logo agrandi d'environ 20% */
-    height: 200px;         /* Logo agrandi d'environ 20% */
+    margin-top: 15px;      
+    margin-bottom: 30px;   
+    width: 200px;          
+    height: 200px;         
 }
 
-/* Logo principal */
+/* Logo : Ombre remplacée par Glow blanc, avec animation premium de flottaison/respiration */
 .hero-logo {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 36px;
     border: 4px solid var(--clr-white);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
     position: relative;
     z-index: 2;
+    animation: premiumLogoFloat 6s ease-in-out infinite;
+}
+
+/* Animation douce du logo */
+@keyframes premiumLogoFloat {
+    0% {
+        transform: scale(1) translateY(0);
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
+    }
+    50% {
+        transform: scale(1.03) translateY(-4px); /* Respiration + flottement vers le haut */
+        box-shadow: 0 0 45px rgba(255, 255, 255, 0.6); /* Glow qui s'intensifie légèrement */
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.35);
+    }
 }
 
 .hero-title {
@@ -298,7 +336,7 @@ body {
 
 .alt-bg { background-color: var(--clr-red-bg); }
 
-/* AJOUT : Section 2 (Concept) sur fond blanc avec adaptation des textes */
+/* Section 2 (Concept) */
 #concept {
     background-color: var(--clr-white);
 }
@@ -329,7 +367,7 @@ body {
     color: var(--clr-text-dark);
     padding: 40px 32px;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-premium); /* L'ombre permet aux cartes de ressortir sur le fond blanc */
+    box-shadow: var(--shadow-premium); 
     transition: var(--transition-smooth);
     position: relative;
     top: 0;
@@ -414,6 +452,11 @@ body {
     .visual-block { order: 2; }
 }
 @media (max-width: 768px) {
+    .navbar {
+        width: 100%;
+        margin-top: 0;
+        border-radius: 0;
+    }
     .nav-menu {
         display: none; position: absolute; top: 100%; left: 0; width: 100%;
         background: var(--clr-red); flex-direction: column; padding: 24px; gap: 16px;
