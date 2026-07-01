@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. ANIMATION NAVBAR (Teinte rouge transparente au scroll)
+    // 2. ANIMATION NAVBAR 
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 40) {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. SCROLL REVEAL (Apparitions fluides)
+    // 3. SCROLL REVEAL 
     const itemsToReveal = document.querySelectorAll('.scroll-reveal, .reveal');
     const revealOnScrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
