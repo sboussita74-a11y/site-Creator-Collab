@@ -1,77 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- GESTION DE LA MODALE D'AUTHENTIFICATION ---
-    const authModal = document.getElementById('auth-modal');
-    const btnLogin = document.getElementById('btn-login');
-    const btnCloseModal = document.getElementById('close-modal');
+
+    /* ==========================================================================
+       1. FONCTIONNALITÉS GLOBALES (Menu, Scroll, Reveal)
+       ========================================================================== */
     
-    // Liens internes à la modale
-    const linkToRegister = document.getElementById('link-to-register');
-    const linkToLogin = document.getElementById('link-to-login');
-
-    // Ouverture / Fermeture
-    function openModal() {
-        authModal.classList.add('is-open');
-        document.body.style.overflow = 'hidden'; // Empêche le scroll en arrière-plan
-    }
-
-    function closeModal() {
-        authModal.classList.remove('is-open');
-        document.body.style.overflow = '';
-        // Réinitialise la modale sur le login après fermeture
-        setTimeout(() => switchModalView('view-login'), 400);
-    }
-
-    if (btnLogin) btnLogin.addEventListener('click', openModal);
-    if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
-    
-    // Fermeture au clic à l'extérieur
-    authModal.addEventListener('click', (e) => {
-        if (e.target === authModal) closeModal();
-    });
-
-    // Navigation entre les vues de la modale
-    window.switchModalView = function(viewId) {
-        const views = document.querySelectorAll('.modal-view');
-        views.forEach(view => view.classList.remove('active-view'));
-        document.getElementById(viewId).classList.add('active-view');
-    };
-
-    if (linkToRegister) linkToRegister.addEventListener('click', (e) => { e.preventDefault(); switchModalView('view-register'); });
-    if (linkToLogin) linkToLogin.addEventListener('click', (e) => { e.preventDefault(); switchModalView('view-login'); });
-
-
-    // --- SIMULATION DU FLUX (ONBOARDING & PROFIL) ---
-    
-    // Déclenché au clic sur "Se connecter" (Simulation d'une première connexion)
-    window.startFirstLoginSimulation = function() {
-        // Lance l'assistant de configuration
-        switchModalView('view-onboard-1');
-    };
-
-    // Déclenché à la fin de l'onboarding
-    window.finishOnboarding = function() {
-        closeModal();
-        
-        // Simule la transition vers la page Profil
-        setTimeout(() => {
-            // Masque la vue publique (Hero + Concept + etc)
-            document.getElementById('public-view').style.display = 'none';
-            // Affiche la vue profil
-            document.getElementById('private-profile-view').style.display = 'block';
-            
-            // Mise à jour de la navbar (Remplacer "Connexion" par "Mon Profil" ou Avatar)
-            const ctaContainer = document.getElementById('nav-cta-container');
-            if(ctaContainer) {
-                ctaContainer.innerHTML = `<button class="btn btn-connexion" style="background:var(--clr-white); color:var(--clr-red);">Mon Profil</button>`;
-            }
-            // Remonte en haut de la page
-            window.scrollTo(0, 0);
-        }, 300);
-    };
-
-    // 1. MENU MOBILE
+    // Menu Mobile
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-    const navMenu = document.querySelector('.nav-menu');
+    const navMenu = document.getElementById('main-nav-menu');
 
     if (mobileMenuBtn && navMenu) {
         mobileMenuBtn.addEventListener('click', () => {
@@ -79,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. ANIMATION NAVBAR 
+    // Navbar Scrolled
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 40) {
@@ -89,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 3. SCROLL REVEAL 
+    // Scroll Reveal (Animations)
     const itemsToReveal = document.querySelectorAll('.scroll-reveal, .reveal');
     const revealOnScrollObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -108,31 +43,124 @@ document.addEventListener('DOMContentLoaded', () => {
         revealOnScrollObserver.observe(item);
     });
 
-    // 4. BOUTONS ACTIONS INTERACTIFS
-    const actionButtons = document.querySelectorAll('[data-action], #btn-login');
-    actionButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const currentAction = e.currentTarget.getAttribute('data-action') || 'login';
-            
-            e.currentTarget.style.transform = "translateY(2px)";
-            setTimeout(() => {
-                e.currentTarget.style.transform = "";
-            }, 100);
+    /* ==========================================================================
+       2. SYSTÈME DE COMPTES (Modale, Authentification, Onboarding)
+       ========================================================================== */
+    
+    const authModal = document.getElementById('auth-modal');
+    const btnLogin = document.getElementById('btn-login');
+    const btnCloseModal = document.getElementById('close-modal');
+    
+    // Ouverture / Fermeture Modale
+    function openModal() {
+        if(!authModal) return;
+        authModal.classList.add('is-open');
+        document.body.style.overflow = 'hidden'; // Bloque le scroll arrière
+    }
 
-            switch (currentAction) {
-                case 'discord':
-                    alert("Simulation : Redirection vers le Discord Creator Collab.");
-                    break;
-                case 'login':
-                    alert("Simulation : Page de connexion.");
-                    break;
-                case 'concept':
-                    document.getElementById('concept').scrollIntoView({ behavior: 'smooth' });
-                    break;
-                case 'simuler':
-                    alert("Simulation : Ouverture de l'espace de démonstration.");
-                    break;
-            }
+    function closeModal() {
+        if(!authModal) return;
+        authModal.classList.remove('is-open');
+        document.body.style.overflow = '';
+        // Réinitialiser la vue au login après la fin de l'animation de fermeture
+        setTimeout(() => switchModalView('view-login'), 400);
+    }
+
+    if (btnLogin) btnLogin.addEventListener('click', openModal);
+    if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
+    
+    // Fermeture au clic sur l'arrière-plan flouté
+    if (authModal) {
+        authModal.addEventListener('click', (e) => {
+            if (e.target === authModal) closeModal();
+        });
+    }
+
+    // Gestion des vues dans la modale
+    function switchModalView(viewId) {
+        const views = document.querySelectorAll('.modal-view');
+        views.forEach(view => view.classList.remove('active-view'));
+        
+        const targetView = document.getElementById(viewId);
+        if (targetView) targetView.classList.add('active-view');
+    }
+
+    // Liens Internes Modale (Switch Connexion <-> Inscription)
+    const linkToRegister = document.getElementById('link-to-register');
+    const linkToLogin = document.getElementById('link-to-login');
+
+    if (linkToRegister) {
+        linkToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchModalView('view-register');
+        });
+    }
+    if (linkToLogin) {
+        linkToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchModalView('view-login');
+        });
+    }
+
+    // Traitement du Formulaire de Connexion -> Lance l'Onboarding
+    const formLogin = document.getElementById('form-login');
+    if (formLogin) {
+        formLogin.addEventListener('submit', (e) => {
+            e.preventDefault();
+            switchModalView('view-onboard-1');
+        });
+    }
+
+    // Traitement du Formulaire d'Inscription -> Lance la vérification Email
+    const formRegister = document.getElementById('form-register');
+    if (formRegister) {
+        formRegister.addEventListener('submit', (e) => {
+            e.preventDefault();
+            switchModalView('view-verify');
+        });
+    }
+
+    // Système de sélection de rôles multiple (Onboarding 2)
+    const rolePills = document.querySelectorAll('.role-pill');
+    rolePills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            pill.classList.toggle('selected');
         });
     });
+
+    // Navigation dans l'Onboarding (Boutons Continuer / Passer)
+    const onboardNextBtns = document.querySelectorAll('.btn-continue, .btn-pass');
+    onboardNextBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const nextView = e.target.getAttribute('data-next');
+            if (nextView) switchModalView(nextView);
+        });
+    });
+
+    // Boutons de fin d'Onboarding
+    const onboardFinishBtns = document.querySelectorAll('.btn-finish');
+    onboardFinishBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            closeModal();
+            
+            // Simule l'accès au profil après 300ms
+            setTimeout(() => {
+                const publicView = document.getElementById('public-view');
+                const privateView = document.getElementById('private-profile-view');
+                const navCtaContainer = document.getElementById('nav-cta-container');
+
+                if (publicView) publicView.style.display = 'none';
+                if (privateView) privateView.style.display = 'block';
+                
+                // Modifie le bouton "Connexion" de la Navbar en "Mon Profil"
+                if (navCtaContainer) {
+                    navCtaContainer.innerHTML = `<button class="btn btn-connexion" style="background:var(--clr-white); color:var(--clr-red);">Mon Profil</button>`;
+                }
+
+                // Remonte tout en haut
+                window.scrollTo(0, 0);
+            }, 300);
+        });
+    });
+
 });
