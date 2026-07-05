@@ -41,17 +41,23 @@
     <div class="side-panel-overlay" id="side-panel-overlay"></div>
     <aside class="side-panel" id="side-panel">
         <div class="side-panel-header">
-            <h3 class="side-panel-title">Menu</h3>
+            <div class="sp-logo-wrapper">
+                <img src="image_cb2c45.jpg" alt="Creator Collab" class="sp-logo-img" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
+                <span class="sp-logo-text">Creator<span>Collab</span></span>
+            </div>
             <button class="side-panel-close" id="close-side-panel">&times;</button>
         </div>
         <ul class="side-panel-nav">
             <li><a href="#" class="sp-link" data-target="view-profile">👤 Mon profil</a></li>
-            <li><a href="#" class="sp-link" data-target="view-soon">🎯 Objectifs</a></li>
+            <li><a href="#" class="sp-link" data-target="view-soon">🤝 Collaborations</a></li>
             <li><a href="#" class="sp-link" data-target="view-soon">📁 Projets</a></li>
-            <li><a href="#" class="sp-link" data-target="view-soon">🤝 Équipe</a></li>
+            <li><a href="#" class="sp-link" data-target="view-soon">👥 Équipe</a></li>
             <li><a href="#" class="sp-link" data-target="view-soon">💬 Messagerie</a></li>
             <li><a href="#" class="sp-link" data-target="view-soon">⚙️ Paramètres</a></li>
         </ul>
+        <div class="side-panel-bottom-actions">
+            <button class="sp-logout-btn" id="sp-btn-logout">🚪 Déconnexion</button>
+        </div>
         <div class="side-panel-footer">
             <div class="user-card">
                 <div class="user-card-avatar" id="sp-avatar"></div>
@@ -62,6 +68,17 @@
             </div>
         </div>
     </aside>
+
+    <div class="logout-modal-overlay" id="logout-modal">
+        <div class="logout-modal-box">
+            <h3 class="logout-modal-title">Déconnexion</h3>
+            <p class="logout-modal-desc">Es-tu sûr(e) de vouloir te déconnecter de ton compte ?</p>
+            <div class="logout-modal-actions">
+                <button class="btn btn-secondary btn-white" id="btn-cancel-logout" style="border: 1px solid #ccc; box-shadow: none;">Annuler</button>
+                <button class="btn btn-primary btn-blue" id="btn-confirm-logout">Déconnexion</button>
+            </div>
+        </div>
+    </div>
 
     <div id="app-content">
 

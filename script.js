@@ -61,18 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
-            const targetId = link.getAttribute('data-nav'); // ex: concept
+            const targetId = link.getAttribute('data-nav');
             
-            // On bascule sur la vue Home pour pouvoir scroller jusqu'à la section
             switchView('view-home');
             
-            // Scroll fluide vers la section
             setTimeout(() => {
                 const section = document.getElementById(targetId);
                 if (section) section.scrollIntoView({ behavior: 'smooth' });
             }, 100);
 
-            // Mettre à jour l'état actif
             document.querySelectorAll('.nav-menu .nav-link').forEach(l => l.classList.remove('active'));
             link.classList.add('active');
         });
@@ -103,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(btnCancelEdit) btnCancelEdit.addEventListener('click', () => switchView('view-profile'));
 
     /* ==========================================================================
-       4. PANNEAU LATÉRAL & DROPDOWN MENU (Utilisateurs connectés)
+       4. PANNEAU LATÉRAL & NAVIGATION DU PROFIL DIRECTE
        ========================================================================== */
     const sidePanel = document.getElementById('side-panel');
     const sidePanelOverlay = document.getElementById('side-panel-overlay');
@@ -128,46 +125,41 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const target = link.getAttribute('data-target');
+            if (target === 'view-edit-profile') {
+                loadEditProfileForm();
+            }
             switchView(target);
         });
+    });
+
+    // Gestion de la modale de déconnexion
+    const logoutModal = document.getElementById('logout-modal');
+    document.getElementById('sp-btn-logout').addEventListener('click', () => {
+        logoutModal.classList.add('is-open');
+    });
+
+    document.getElementById('btn-cancel-logout').addEventListener('click', () => {
+        logoutModal.classList.remove('is-open');
+    });
+
+    document.getElementById('btn-confirm-logout').addEventListener('click', () => {
+        logoutUser();
     });
 
     // Mise à jour de la Navbar pour utilisateur connecté
     function updateNavbarForUser(user) {
         const navCtaContainer = document.getElementById('nav-cta-container');
         
-        // Remplacer le bouton Connexion par le Dropdown Menu
+        // Remplacer le bouton Connexion par le bouton Mon Profil (accès direct)
         navCtaContainer.innerHTML = `
-            <button class="btn btn-white" id="btn-dropdown-toggle" style="padding: 10px 20px;">
-                Mon Profil ▾
+            <button class="btn btn-white" id="btn-nav-profile" style="padding: 10px 20px;">
+                Mon Profil
             </button>
-            <div class="dropdown-menu" id="user-dropdown">
-                <a class="dd-item" id="dd-profile">Mon profil</a>
-                <a class="dd-item" id="dd-edit">Modifier mon profil</a>
-                <a class="dd-item" id="dd-settings">Paramètres</a>
-                <a class="dd-item text-red" id="dd-logout">Déconnexion</a>
-            </div>
         `;
 
-        // Logique du Dropdown
-        const toggle = document.getElementById('btn-dropdown-toggle');
-        const dropdown = document.getElementById('user-dropdown');
-        
-        toggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('show');
+        document.getElementById('btn-nav-profile').addEventListener('click', () => {
+            switchView('view-profile');
         });
-
-        document.addEventListener('click', (e) => {
-            if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-                dropdown.classList.remove('show');
-            }
-        });
-
-        document.getElementById('dd-profile').addEventListener('click', () => { switchView('view-profile'); dropdown.classList.remove('show'); });
-        document.getElementById('dd-edit').addEventListener('click', () => { loadEditProfileForm(); switchView('view-edit-profile'); dropdown.classList.remove('show'); });
-        document.getElementById('dd-settings').addEventListener('click', () => { switchView('view-soon'); dropdown.classList.remove('show'); });
-        document.getElementById('dd-logout').addEventListener('click', logoutUser);
 
         // Peupler le bas du panneau latéral
         document.getElementById('sp-name').textContent = user.name;
@@ -183,6 +175,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (user.avatar) {
             avatarDisplay.style.backgroundImage = `url(${user.avatar})`;
             avatarDisplay.innerHTML = "";
+        } else {
+            avatarDisplay.style.backgroundImage = "none";
+            avatarDisplay.innerHTML = "👤";
         }
 
         if (user.roles && user.roles.length > 0) {
