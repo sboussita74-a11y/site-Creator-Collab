@@ -19,11 +19,11 @@
             </a>
             
             <ul class="nav-menu" id="main-nav-menu">
-                <li><a href="#" class="nav-link active">Accueil</a></li>
-                <li><a href="#concept" class="nav-link">Concept</a></li>
-                <li><a href="#collaborer" class="nav-link">Collaborations</a></li>
-                <li><a href="#evenements" class="nav-link">Événements</a></li>
-                <li><a href="#discord" class="nav-link">Discord</a></li>
+                <li><a href="#home" class="nav-link active" data-nav="home">Accueil</a></li>
+                <li><a href="#concept" class="nav-link" data-nav="concept">Concept</a></li>
+                <li><a href="#collaborer" class="nav-link" data-nav="collaborer">Collaborations</a></li>
+                <li><a href="#evenements" class="nav-link" data-nav="evenements">Événements</a></li>
+                <li><a href="#discord" class="nav-link" data-nav="discord">Discord</a></li>
             </ul>
 
             <div class="nav-cta" id="nav-cta-container">
@@ -38,91 +38,210 @@
         </div>
     </nav>
 
-    <div id="public-view">
-        <header class="hero">
-            <div class="sparkle sparkle-1"></div>
-            <div class="sparkle sparkle-2"></div>
-            <div class="sparkle sparkle-3"></div>
-
-            <div class="hero-container">
-                <div class="hero-logo-frame reveal">
-                    <div class="hero-rays"></div>
-                    <img src="image_cb2c45.jpg" alt="Creator Collab Logo Officiel" class="hero-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
-                </div>
-                
-                <h1 class="hero-title reveal">
-                    PROPULSE TES PROJETS <br>
-                    <span class="highlight-text">AVEC LES MEILLEURS CRÉATEURS</span>
-                </h1>
-                
-                <p class="hero-subtitle reveal">
-                    La plateforme d'entraide et de synergie conçue pour les YouTubers, Streamers, Monteurs, Graphistes et Développeurs. Connecte tes compétences, casse la solitude et crée sans limites.
-                </p>
-                
-                <div class="hero-actions reveal">
-                    <button class="btn btn-primary btn-blue" data-action="discord">
-                        <span>Rejoindre le Discord</span>
-                    </button>
-                    <button class="btn btn-secondary btn-white" data-action="concept">
-                        <span>Découvrir la plateforme</span>
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <main class="main-content">
-            <section id="concept" class="presentation-section scroll-reveal">
-                <div class="container">
-                    <div class="section-badge-wrapper"><span class="ui-badge">L'Écosystème</span></div>
-                    <h2 class="section-headline">Pourquoi Creator Collab ?</h2>
-                    <p class="section-paragraph">Créer du contenu est une aventure passionnante, mais souvent solitaire. Trouver un monteur de confiance, un graphiste qui comprend ton univers ou un développeur pour tes extensions de stream relève souvent du parcours du combattant. Creator Collab centralise les forces vives du web pour transformer tes idées isolées en succès collectifs.</p>
-                    <div class="features-grid">
-                        <div class="feature-card"><div class="feature-icon-wrapper red-tint">🛠️</div><h3>Synergie de Compétences</h3><p>Fais correspondre instantanément tes besoins créatifs avec les talents disponibles au sein de la communauté.</p></div>
-                        <div class="feature-card"><div class="feature-icon-wrapper blue-tint">🤝</div><h3>Entraide Gratuite</h3><p>Une plateforme pensée par des créateurs, pour des créateurs. Aucun business modèle lourd, juste de la collaboration pure.</p></div>
-                        <div class="feature-card"><div class="feature-icon-wrapper grey-tint">⚡</div><h3>Gain de Temps</h3><p>Structure tes demandes de projets pour recevoir directement les profils les plus pertinents et motivés.</p></div>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <div id="private-profile-view" style="display: none;">
-        <div class="profile-header">
-            <div class="container profile-container">
-                <div class="profile-avatar-large" id="profile-display-avatar">
-                    </div>
-                <div class="profile-info">
-                    <h1 class="profile-name" id="profile-display-name">Nom d'affichage</h1>
-                    <p class="profile-handle" id="profile-display-handle">@identifiant</p>
-                </div>
-                <div class="profile-actions">
-                    <button class="btn btn-secondary btn-white" id="btn-logout">Déconnexion</button>
+    <div class="side-panel-overlay" id="side-panel-overlay"></div>
+    <aside class="side-panel" id="side-panel">
+        <div class="side-panel-header">
+            <h3 class="side-panel-title">Menu</h3>
+            <button class="side-panel-close" id="close-side-panel">&times;</button>
+        </div>
+        <ul class="side-panel-nav">
+            <li><a href="#" class="sp-link" data-target="view-profile">👤 Mon profil</a></li>
+            <li><a href="#" class="sp-link" data-target="view-soon">🎯 Objectifs</a></li>
+            <li><a href="#" class="sp-link" data-target="view-soon">📁 Projets</a></li>
+            <li><a href="#" class="sp-link" data-target="view-soon">🤝 Équipe</a></li>
+            <li><a href="#" class="sp-link" data-target="view-soon">💬 Messagerie</a></li>
+            <li><a href="#" class="sp-link" data-target="view-soon">⚙️ Paramètres</a></li>
+        </ul>
+        <div class="side-panel-footer">
+            <div class="user-card">
+                <div class="user-card-avatar" id="sp-avatar"></div>
+                <div class="user-card-info">
+                    <div class="user-card-name" id="sp-name">Nom</div>
+                    <div class="user-card-handle" id="sp-handle">@identifiant</div>
                 </div>
             </div>
         </div>
-        <main class="profile-body container">
-            <div class="profile-grid">
-                <aside class="profile-sidebar">
-                    <div class="profile-card">
-                        <h3 class="text-dark">Biographie</h3>
-                        <p class="text-muted" id="profile-display-bio">Aucune biographie renseignée.</p>
+    </aside>
+
+    <div id="app-content">
+
+        <div id="view-home" class="app-view active-view">
+            <header class="hero" id="home">
+                <div class="sparkle sparkle-1"></div>
+                <div class="sparkle sparkle-2"></div>
+                <div class="sparkle sparkle-3"></div>
+
+                <div class="hero-container">
+                    <div class="hero-logo-frame reveal">
+                        <div class="hero-rays"></div>
+                        <img src="image_cb2c45.jpg" alt="Creator Collab Logo Officiel" class="hero-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
                     </div>
-                    <div class="profile-card">
-                        <h3 class="text-dark">Liens</h3>
-                        <p class="text-muted" id="profile-display-links">Aucun lien ajouté.</p>
+                    
+                    <h1 class="hero-title reveal">
+                        PROPULSE TES PROJETS <br>
+                        <span class="highlight-text">AVEC LES MEILLEURS CRÉATEURS</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle reveal">
+                        La plateforme d'entraide et de synergie conçue pour les YouTubers, Streamers, Monteurs, Graphistes et Développeurs. Connecte tes compétences, casse la solitude et crée sans limites.
+                    </p>
+                    
+                    <div class="hero-actions reveal">
+                        <button class="btn btn-primary btn-blue" id="btn-hero-discord">
+                            <span>Rejoindre le Discord</span>
+                        </button>
+                        <button class="btn btn-secondary btn-white" id="btn-hero-concept">
+                            <span>Découvrir la plateforme</span>
+                        </button>
                     </div>
-                </aside>
-                <section class="profile-content">
-                    <div class="profile-card empty-state">
-                        <h3 class="text-dark">Activité récente</h3>
-                        <p class="text-muted">Cet espace affichera bientôt tes projets et collaborations.</p>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <section id="concept" class="presentation-section scroll-reveal">
+                    <div class="container">
+                        <div class="section-badge-wrapper"><span class="ui-badge">L'Écosystème</span></div>
+                        <h2 class="section-headline">Pourquoi Creator Collab ?</h2>
+                        <p class="section-paragraph">Créer du contenu est une aventure passionnante, mais souvent solitaire. Trouver un monteur de confiance, un graphiste qui comprend ton univers ou un développeur pour tes extensions de stream relève souvent du parcours du combattant. Creator Collab centralise les forces vives du web pour transformer tes idées isolées en succès collectifs.</p>
+                        <div class="features-grid">
+                            <div class="feature-card"><div class="feature-icon-wrapper red-tint">🛠️</div><h3>Synergie de Compétences</h3><p>Fais correspondre instantanément tes besoins créatifs avec les talents disponibles au sein de la communauté.</p></div>
+                            <div class="feature-card"><div class="feature-icon-wrapper blue-tint">🤝</div><h3>Entraide Gratuite</h3><p>Une plateforme pensée par des créateurs, pour des créateurs. Aucun business modèle lourd, juste de la collaboration pure.</p></div>
+                            <div class="feature-card"><div class="feature-icon-wrapper grey-tint">⚡</div><h3>Gain de Temps</h3><p>Structure tes demandes de projets pour recevoir directement les profils les plus pertinents et motivés.</p></div>
+                        </div>
                     </div>
                 </section>
-            </div>
-        </main>
-    </div>
+                
+                <section id="collaborer" class="presentation-section scroll-reveal" style="background: var(--clr-red); color: white;">
+                    <div class="container">
+                        <h2 class="section-headline" style="color: white;">Collaborations (Placeholder)</h2>
+                        <p class="section-paragraph">Cette section affichera bientôt les projets en cours.</p>
+                    </div>
+                </section>
+                
+                <section id="evenements" class="presentation-section scroll-reveal" style="background: white;">
+                    <div class="container">
+                        <h2 class="section-headline">Événements (Placeholder)</h2>
+                        <p class="section-paragraph" style="color: var(--clr-text-muted);">Cette section affichera bientôt les événements communautaires.</p>
+                    </div>
+                </section>
+                
+                <section id="discord" class="presentation-section scroll-reveal" style="background: var(--clr-red-dark); color: white;">
+                    <div class="container">
+                        <h2 class="section-headline" style="color: white;">Rejoins-nous sur Discord</h2>
+                        <p class="section-paragraph">Rejoins la communauté la plus active de créateurs.</p>
+                    </div>
+                </section>
+            </main>
+        </div>
 
-    <footer class="site-footer">
+        <div id="view-profile" class="app-view">
+            <div class="profile-header">
+                <div class="container profile-container">
+                    <div class="profile-avatar-large" id="profile-display-avatar"></div>
+                    <div class="profile-info">
+                        <h1 class="profile-name" id="profile-display-name">Nom</h1>
+                        <p class="profile-handle" id="profile-display-handle">@identifiant</p>
+                        <div class="profile-roles-display mt-2" id="profile-display-roles"></div>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn btn-secondary btn-white" id="btn-to-edit-profile">Modifier le profil</button>
+                    </div>
+                </div>
+            </div>
+            <main class="profile-body container">
+                <div class="profile-grid">
+                    <aside class="profile-sidebar">
+                        <div class="profile-card">
+                            <h3>Biographie</h3>
+                            <p class="text-muted" id="profile-display-bio">Aucune biographie renseignée.</p>
+                        </div>
+                        <div class="profile-card">
+                            <h3>Liens</h3>
+                            <div class="text-muted" id="profile-display-links">Aucun lien ajouté.</div>
+                        </div>
+                    </aside>
+                    <section class="profile-content">
+                        <div class="profile-card empty-state">
+                            <h3>Activité récente</h3>
+                            <p class="text-muted">Cet espace affichera bientôt tes projets et collaborations.</p>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <div id="view-edit-profile" class="app-view">
+            <div class="container" style="padding-top: 120px; padding-bottom: 60px;">
+                <div class="edit-profile-wrapper">
+                    <h2 class="edit-title">Modifier mon profil</h2>
+                    
+                    <form id="form-edit-profile">
+                        <div class="form-group text-center">
+                            <label>Photo de profil</label>
+                            <div class="avatar-upload-zone" id="edit-avatar-trigger">
+                                <div class="avatar-circle" id="edit-avatar-preview">📸</div>
+                                <p class="text-link mt-2 text-sm" style="color: var(--clr-text-dark);">Changer la photo</p>
+                                <input type="file" id="edit-avatar-input" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="form-group-row mt-4">
+                            <div class="form-group">
+                                <label>Nom d'affichage</label>
+                                <input type="text" id="edit-name" class="form-input dark-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Identifiant (@)</label>
+                                <input type="text" id="edit-handle" class="form-input dark-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Biographie</label>
+                            <textarea id="edit-bio" class="form-input dark-input" rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Compétences / Rôles</label>
+                            <div class="roles-grid" id="edit-roles" style="justify-content: flex-start;">
+                                <div class="role-pill dark-pill">Créateur de contenu</div>
+                                <div class="role-pill dark-pill">Monteur vidéo</div>
+                                <div class="role-pill dark-pill">Graphiste</div>
+                                <div class="role-pill dark-pill">Développeur</div>
+                                <div class="role-pill dark-pill">Motion Designer</div>
+                                <div class="role-pill dark-pill">Miniaturiste</div>
+                                <div class="role-pill dark-pill">Autre</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tes liens (YouTube, Twitch, X...)</label>
+                            <input type="url" id="edit-link-1" class="form-input dark-input mb-2" placeholder="Lien 1">
+                            <input type="url" id="edit-link-2" class="form-input dark-input mb-2" placeholder="Lien 2">
+                            <input type="url" id="edit-link-3" class="form-input dark-input" placeholder="Lien 3">
+                        </div>
+
+                        <div id="edit-error" class="error-message" style="display: none;"></div>
+                        <div id="edit-success" class="success-message" style="display: none;">Profil sauvegardé avec succès !</div>
+
+                        <div class="form-actions" style="display: flex; gap: 15px;">
+                            <button type="button" class="btn btn-secondary btn-white btn-full" id="btn-cancel-edit" style="border: 1px solid #ccc;">Annuler</button>
+                            <button type="submit" class="btn btn-primary btn-blue btn-full">Sauvegarder</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-soon" class="app-view">
+            <div class="container text-center" style="padding-top: 150px; padding-bottom: 100px;">
+                <h1 style="font-family: var(--font-heading); font-size: 3rem; margin-bottom: 20px;">🚧 En construction</h1>
+                <p style="font-size: 1.2rem; opacity: 0.9;">Cette fonctionnalité arrivera prochainement sur Creator Collab.</p>
+                <button class="btn btn-white mt-4" id="btn-back-home" style="margin-top: 30px;">Retour à l'accueil</button>
+            </div>
+        </div>
+
+    </div> <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-brand">
                 <span class="logo-text">Creator<span>Collab</span></span>
@@ -135,45 +254,27 @@
     <div class="modal-overlay" id="auth-modal">
         <div class="modal-wrapper">
             <img src="image_cb2c45.jpg" alt="Creator Collab" class="modal-external-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
-            
             <div class="modal-box">
                 <button class="modal-close" id="close-modal" aria-label="Fermer">&times;</button>
-                
                 <div class="modal-content-area">
                     
                     <div class="modal-view active-view" id="view-login">
                         <h2 class="modal-title">Connexion</h2>
                         <div id="login-error" class="error-message" style="display: none;"></div>
-                        
                         <form class="auth-form" id="form-login">
-                            <div class="form-group">
-                                <label>Adresse e-mail</label>
-                                <input type="email" id="login-email" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mot de passe</label>
-                                <input type="password" id="login-password" class="form-input" required>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary btn-white btn-full">Se connecter</button>
-                            </div>
-                            <div class="form-footer">
-                                <a href="#" class="text-link">Mot de passe oublié ?</a>
-                                <p class="mt-2"><a href="#" class="text-link font-bold" id="link-to-register">Créer un compte</a></p>
-                            </div>
+                            <div class="form-group"><label>Adresse e-mail</label><input type="email" id="login-email" class="form-input" required></div>
+                            <div class="form-group"><label>Mot de passe</label><input type="password" id="login-password" class="form-input" required></div>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary btn-white btn-full">Se connecter</button></div>
+                            <div class="form-footer"><p class="mt-2"><a href="#" class="text-link font-bold" id="link-to-register">Créer un compte</a></p></div>
                         </form>
                     </div>
 
                     <div class="modal-view" id="view-register">
                         <h2 class="modal-title">Inscription</h2>
-                        <div id="register-error" class="error-message" style="display: none;"></div>
-
+                        <div id="register-error" class="error-message" style="display: none; white-space: pre-line;"></div>
                         <form class="auth-form" id="form-register">
                             <div class="form-group-row">
-                                <div class="form-group">
-                                    <label>Nom d'affichage</label>
-                                    <input type="text" id="reg-name" class="form-input" required>
-                                </div>
+                                <div class="form-group"><label>Nom d'affichage</label><input type="text" id="reg-name" class="form-input" required></div>
                                 <div class="form-group">
                                     <label>Identifiant unique</label>
                                     <div class="input-with-prefix">
@@ -182,41 +283,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Adresse e-mail</label>
-                                <input type="email" id="reg-email" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Mot de passe</label>
-                                <input type="password" id="reg-password" class="form-input" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Confirmation du mot de passe</label>
-                                <input type="password" id="reg-password-confirm" class="form-input" required>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="tos" required>
-                                <label for="tos">J'accepte les conditions d'utilisation.</label>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary btn-white btn-full">Créer mon compte</button>
-                            </div>
-                            <div class="form-footer">
-                                <p>Déjà un compte ? <a href="#" class="text-link font-bold" id="link-to-login">Se connecter</a></p>
-                            </div>
+                            <div class="form-group"><label>Adresse e-mail</label><input type="email" id="reg-email" class="form-input" required></div>
+                            <div class="form-group"><label>Mot de passe</label><input type="password" id="reg-password" class="form-input" required></div>
+                            <div class="form-group"><label>Confirmation</label><input type="password" id="reg-password-confirm" class="form-input" required></div>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary btn-white btn-full">Créer mon compte</button></div>
+                            <div class="form-footer"><p>Déjà un compte ? <a href="#" class="text-link font-bold" id="link-to-login">Se connecter</a></p></div>
                         </form>
                     </div>
 
                     <div class="modal-view text-center" id="view-onboard-1">
                         <h2 class="modal-title">Photo de profil</h2>
-                        <p class="modal-desc">Ajoute un visage ou un logo à ton profil (facultatif).</p>
-                        
+                        <p class="modal-desc">Ajoute un visage ou un logo à ton profil.</p>
                         <div class="avatar-upload-zone mt-4 mb-4" id="avatar-upload-trigger">
                             <div class="avatar-circle" id="avatar-preview">📸</div>
                             <p class="text-link mt-2 text-sm">Choisir un fichier</p>
-                            <input type="file" id="avatar-input" accept="image/png, image/jpeg, image/webp" style="display: none;">
+                            <input type="file" id="avatar-input" accept="image/*" style="display: none;">
                         </div>
-                        
                         <div class="onboard-actions">
                             <button type="button" class="btn btn-secondary btn-white btn-pass" data-next="view-onboard-2">Passer</button>
                             <button type="button" class="btn btn-primary btn-blue btn-continue" data-next="view-onboard-2">Continuer</button>
@@ -224,49 +306,15 @@
                     </div>
 
                     <div class="modal-view" id="view-onboard-2">
-                        <h2 class="modal-title text-center">Tes compétences</h2>
-                        <p class="modal-desc text-center">Sélectionne tes rôles pour aider les autres à te trouver.</p>
+                        <h2 class="modal-title text-center">Terminer le profil</h2>
+                        <p class="modal-desc text-center">Tu pourras modifier ceci plus tard.</p>
                         <div class="roles-grid mt-4 mb-4" id="onboard-roles">
-                            <div class="role-pill">Créateur de contenu</div>
-                            <div class="role-pill">Monteur vidéo</div>
-                            <div class="role-pill">Graphiste</div>
-                            <div class="role-pill">Développeur</div>
-                            <div class="role-pill">Motion Designer</div>
-                            <div class="role-pill">Miniaturiste</div>
-                            <div class="role-pill">Autre</div>
+                            <div class="role-pill">Créateur</div><div class="role-pill">Monteur</div><div class="role-pill">Graphiste</div><div class="role-pill">Développeur</div>
                         </div>
-                        <div class="onboard-actions">
-                            <button type="button" class="btn btn-secondary btn-white btn-pass" data-next="view-onboard-3">Passer</button>
-                            <button type="button" class="btn btn-primary btn-blue btn-continue" data-next="view-onboard-3">Continuer</button>
+                        <div class="onboard-actions mt-4">
+                            <button type="button" class="btn btn-primary btn-blue btn-finish btn-full" style="grid-column: span 2;">C'est parti !</button>
                         </div>
                     </div>
-
-                    <div class="modal-view" id="view-onboard-3">
-                        <h2 class="modal-title text-center">Tes réseaux</h2>
-                        <p class="modal-desc text-center">Connecte tes liens principaux (facultatif).</p>
-                        <div class="form-group mt-4">
-                            <div class="form-group"><label>YouTube / Twitch</label><input type="url" id="link-1" class="form-input"></div>
-                            <div class="form-group"><label>Twitter / Instagram</label><input type="url" id="link-2" class="form-input"></div>
-                            <div class="form-group"><label>Portfolio / GitHub</label><input type="url" id="link-3" class="form-input"></div>
-                        </div>
-                        <div class="onboard-actions">
-                            <button type="button" class="btn btn-secondary btn-white btn-pass" data-next="view-onboard-4">Passer</button>
-                            <button type="button" class="btn btn-primary btn-blue btn-continue" data-next="view-onboard-4">Continuer</button>
-                        </div>
-                    </div>
-
-                    <div class="modal-view" id="view-onboard-4">
-                        <h2 class="modal-title text-center">Ta biographie</h2>
-                        <p class="modal-desc text-center">Présente-toi brièvement à la communauté.</p>
-                        <div class="form-group mt-4 mb-4">
-                            <textarea id="onboard-bio" class="form-input" rows="4"></textarea>
-                        </div>
-                        <div class="onboard-actions">
-                            <button type="button" class="btn btn-secondary btn-white btn-finish">Passer</button>
-                            <button type="button" class="btn btn-primary btn-blue btn-finish">Terminer</button>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
