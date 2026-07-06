@@ -25,7 +25,67 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================================================
-       2. UI & ANIMATIONS GLOBALES
+       2. GESTION DU THÈME
+       ========================================================================== */
+    function applyTheme(theme) {
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+        } else if (theme === 'light') {
+            document.body.classList.remove('dark-theme');
+        } else if (theme === 'auto') {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        }
+    }
+
+    function loadSavedTheme() {
+        const saved = localStorage.getItem('creatorCollabTheme') || 'light';
+        applyTheme(saved);
+        
+        // Coche la bonne option dans les paramètres si la page charge
+        const radio = document.querySelector(`input[name="theme-select"][value="${saved}"]`);
+        if(radio) radio.checked = true;
+    }
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (localStorage.getItem('creatorCollabTheme') === 'auto') applyTheme('auto');
+    });
+
+    document.querySelectorAll('input[name="theme-select"]').forEach(input => {
+        input.addEventListener('change', (e) => {
+            const val = e.target.value;
+            localStorage.setItem('creatorCollabTheme', val);
+            applyTheme(val);
+        });
+    });
+
+    loadSavedTheme();
+
+    /* ==========================================================================
+       3. NOTIFICATIONS (TOAST)
+       ========================================================================== */
+    const toastContainer = document.getElementById('toast-container');
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        toastContainer.appendChild(toast);
+        
+        // Trigger reflow pour l'animation
+        void toast.offsetWidth; 
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 400); // Attend fin animation css
+        }, 3000);
+    }
+
+    /* ==========================================================================
+       4. UI & ANIMATIONS GLOBALES
        ========================================================================== */
     const navbar = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
@@ -45,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     itemsToReveal.forEach(item => revealObserver.observe(item));
 
     /* ==========================================================================
-       3. NAVIGATION & VUES (ROUTING)
+       5. NAVIGATION & VUES (ROUTING)
        ========================================================================== */
     function switchView(viewId) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active-view'));
@@ -100,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(btnCancelEdit) btnCancelEdit.addEventListener('click', () => switchView('view-profile'));
 
     /* ==========================================================================
-       4. PANNEAU LATÉRAL & NAVIGATION DU PROFIL DIRECTE
+       6. PANNEAU LATÉRAL & NAVIGATION DU PROFIL DIRECTE
        ========================================================================== */
     const sidePanel = document.getElementById('side-panel');
     const sidePanelOverlay = document.getElementById('side-panel-overlay');
@@ -117,7 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('close-side-panel').addEventListener('click', closeSidePanel);
     
-    // Fermeture en cliquant en dehors du panneau (l'overlay ne bloque plus les clics)
     document.addEventListener('click', (e) => {
         if (sidePanel.classList.contains('open')) {
             if (!sidePanel.contains(e.target) && !e.target.closest('#nav-logo-link') && !e.target.closest('#btn-nav-profile') && !e.target.closest('#logout-modal')) {
@@ -126,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Liens du panneau latéral
     document.querySelectorAll('.sp-link').forEach(link => {
         link.addEventListener('click', (e) => {
             if (link.id === 'sp-btn-logout') return;
@@ -139,21 +197,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Gestion de la modale de déconnexion
     const logoutModal = document.getElementById('logout-modal');
     document.getElementById('sp-btn-logout').addEventListener('click', () => {
         logoutModal.classList.add('is-open');
     });
-
     document.getElementById('btn-cancel-logout').addEventListener('click', () => {
         logoutModal.classList.remove('is-open');
     });
-
     document.getElementById('btn-confirm-logout').addEventListener('click', () => {
         logoutUser();
     });
 
-    // Mise à jour de la Navbar pour utilisateur connecté
     function updateNavbarForUser(user) {
         const navCtaContainer = document.getElementById('nav-cta-container');
         
@@ -167,12 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
             switchView('view-profile');
         });
 
-        // Peupler le bas du panneau latéral
         document.getElementById('sp-name').textContent = user.name;
         document.getElementById('sp-handle').textContent = "@" + user.handle;
         if(user.avatar) document.getElementById('sp-avatar').style.backgroundImage = `url(${user.avatar})`;
 
-        // Remplir la page profil
         document.getElementById('profile-display-name').textContent = user.name;
         document.getElementById('profile-display-handle').textContent = "@" + user.handle;
         document.getElementById('profile-display-bio').textContent = user.bio || "Aucune biographie renseignée.";
@@ -192,12 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (user.links && user.links.length > 0) {
             document.getElementById('profile-display-links').innerHTML = user.links.map(link => `<a href="${link}" target="_blank" style="color: var(--clr-blue); display:block; margin-bottom:5px;">${link}</a>`).join('');
+        } else {
+            document.getElementById('profile-display-links').innerHTML = "Aucun lien ajouté.";
         }
     }
 
-
     /* ==========================================================================
-       5. AUTHENTIFICATION & VALIDATION (Modale)
+       7. AUTHENTIFICATION & VALIDATION (Modale)
        ========================================================================== */
     const authModal = document.getElementById('auth-modal');
     function openModal() { if(authModal) { authModal.classList.add('is-open'); document.body.style.overflow = 'hidden'; } }
@@ -217,7 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('link-to-register').addEventListener('click', (e) => { e.preventDefault(); switchModalView('view-register'); });
     document.getElementById('link-to-login').addEventListener('click', (e) => { e.preventDefault(); switchModalView('view-login'); });
 
-    /* INSCRIPTION AVEC VALIDATION MDP */
     document.getElementById('form-register').addEventListener('submit', (e) => {
         e.preventDefault();
         const errorDiv = document.getElementById('register-error');
@@ -228,7 +280,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('reg-password').value;
         const passwordConfirm = document.getElementById('reg-password-confirm').value;
 
-        // Validation Mot de Passe
         let pwdErrors = [];
         if(password.length < 8) pwdErrors.push("- 8 caractères minimum");
         if(!/[A-Z]/.test(password)) pwdErrors.push("- Une majuscule");
@@ -259,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
         switchModalView('view-onboard-1');
     });
 
-    /* CONNEXION */
     document.getElementById('form-login').addEventListener('submit', (e) => {
         e.preventDefault();
         const errorDiv = document.getElementById('login-error');
@@ -282,7 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       6. GESTION DES IMAGES ET ROLES (Upload & Sélection)
+       8. GESTION DES IMAGES ET ROLES
        ========================================================================== */
     function setupImageUpload(triggerId, inputId, previewId, callback) {
         const trigger = document.getElementById(triggerId);
@@ -307,19 +357,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let tempAvatar = null;
-    
-    // Upload Onboarding
     setupImageUpload('avatar-upload-trigger', 'avatar-input', 'avatar-preview', (b64) => tempAvatar = b64);
-    
-    // Upload Vue Edit Profile
     setupImageUpload('edit-avatar-trigger', 'edit-avatar-input', 'edit-avatar-preview', (b64) => tempAvatar = b64);
 
-    // Sélection des rôles
     document.querySelectorAll('.role-pill').forEach(pill => {
         pill.addEventListener('click', () => pill.classList.toggle('selected'));
     });
 
-    // Finaliser Onboarding
     document.querySelectorAll('.btn-continue, .btn-pass').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const nextView = e.target.getAttribute('data-next');
@@ -341,8 +385,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       7. EDITION DU PROFIL (VRAIE FONCTIONNALITÉ)
+       9. EDITION DU PROFIL & LIENS DYNAMIQUES
        ========================================================================== */
+    
+    // Système de liens dynamiques
+    let editLinksData = [];
+    const maxLinks = 10;
+    const linksContainer = document.getElementById('edit-links-container');
+    const btnAddLink = document.getElementById('btn-add-link');
+    const limitMsg = document.getElementById('links-limit-msg');
+
+    function renderEditLinks() {
+        linksContainer.innerHTML = '';
+        editLinksData.forEach((linkValue, index) => {
+            const row = document.createElement('div');
+            row.className = 'link-row';
+            
+            const input = document.createElement('input');
+            input.type = 'url';
+            input.className = 'form-input dark-input';
+            input.placeholder = 'https://...';
+            input.value = linkValue;
+            input.addEventListener('input', (e) => { editLinksData[index] = e.target.value; });
+
+            const btnRemove = document.createElement('button');
+            btnRemove.type = 'button';
+            btnRemove.className = 'btn-remove-link';
+            btnRemove.textContent = '×';
+            btnRemove.title = 'Supprimer ce lien';
+            btnRemove.addEventListener('click', () => {
+                editLinksData.splice(index, 1);
+                renderEditLinks();
+            });
+
+            row.appendChild(input);
+            row.appendChild(btnRemove);
+            linksContainer.appendChild(row);
+        });
+
+        if (editLinksData.length >= maxLinks) {
+            btnAddLink.style.display = 'none';
+            limitMsg.style.display = 'block';
+        } else {
+            btnAddLink.style.display = 'inline-block';
+            limitMsg.style.display = 'none';
+        }
+    }
+
+    btnAddLink.addEventListener('click', () => {
+        if (editLinksData.length < maxLinks) {
+            editLinksData.push('');
+            renderEditLinks();
+        }
+    });
+
     function loadEditProfileForm() {
         const user = getCurrentUser();
         if(!user) return;
@@ -354,9 +450,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('edit-handle').value = user.handle;
         document.getElementById('edit-bio').value = user.bio || "";
         
-        document.getElementById('edit-link-1').value = user.links[0] || "";
-        document.getElementById('edit-link-2').value = user.links[1] || "";
-        document.getElementById('edit-link-3').value = user.links[2] || "";
+        editLinksData = user.links ? [...user.links] : [];
+        if (editLinksData.length === 0) editLinksData.push(''); // Au moins un champ vide par défaut
+        renderEditLinks();
 
         tempAvatar = user.avatar;
         const preview = document.getElementById('edit-avatar-preview');
@@ -398,10 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
         user.bio = document.getElementById('edit-bio').value.trim();
         user.avatar = tempAvatar;
         
-        const l1 = document.getElementById('edit-link-1').value.trim();
-        const l2 = document.getElementById('edit-link-2').value.trim();
-        const l3 = document.getElementById('edit-link-3').value.trim();
-        user.links = [l1, l2, l3].filter(l => l !== "");
+        // Nettoyer les liens vides
+        user.links = editLinksData.map(l => l.trim()).filter(l => l !== "");
 
         user.roles = Array.from(document.querySelectorAll('#edit-roles .role-pill.selected')).map(p => p.textContent);
 
@@ -413,11 +507,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             switchView('view-profile');
-        }, 2000);
+        }, 1500);
     });
 
     /* ==========================================================================
-       8. INITIALISATION
+       10. PARAMÈTRES (Tabs & Mot de passe)
+       ========================================================================== */
+    const settingsTabs = document.querySelectorAll('.settings-tab');
+    
+    settingsTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            if (tab.classList.contains('unimplemented')) {
+                showToast('Cette fonctionnalité sera bientôt disponible.');
+                return;
+            }
+
+            settingsTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            document.querySelectorAll('.settings-section').forEach(sec => sec.classList.remove('active-section'));
+            const targetId = tab.getAttribute('data-tab');
+            document.getElementById(targetId).classList.add('active-section');
+        });
+    });
+
+    // Formulaire changement de mot de passe
+    document.getElementById('form-change-password').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const user = getCurrentUser();
+        if (!user) return;
+
+        const errorDiv = document.getElementById('pwd-error');
+        const successDiv = document.getElementById('pwd-success');
+        errorDiv.style.display = 'none';
+        successDiv.style.display = 'none';
+
+        const currentPwd = document.getElementById('pwd-current').value;
+        const newPwd = document.getElementById('pwd-new').value;
+        const confirmPwd = document.getElementById('pwd-confirm').value;
+
+        if (currentPwd !== user.password) {
+            errorDiv.textContent = "Le mot de passe actuel est incorrect.";
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        let pwdErrors = [];
+        if(newPwd.length < 8) pwdErrors.push("- 8 caractères minimum");
+        if(!/[A-Z]/.test(newPwd)) pwdErrors.push("- Une majuscule");
+        if(!/[a-z]/.test(newPwd)) pwdErrors.push("- Une minuscule");
+        if(!/[0-9]/.test(newPwd)) pwdErrors.push("- Un chiffre");
+        if(!/[^A-Za-z0-9]/.test(newPwd)) pwdErrors.push("- Un caractère spécial");
+
+        if(pwdErrors.length > 0) {
+            errorDiv.innerHTML = "<strong>Le nouveau mot de passe doit contenir :</strong><br>" + pwdErrors.join("<br>");
+            errorDiv.style.display = "block";
+            return;
+        }
+
+        if (newPwd !== confirmPwd) {
+            errorDiv.textContent = "Les nouveaux mots de passe ne correspondent pas.";
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        // Sauvegarde
+        user.password = newPwd;
+        saveUser(user.email, user);
+        
+        successDiv.style.display = 'block';
+        document.getElementById('form-change-password').reset();
+        
+        setTimeout(() => {
+            successDiv.style.display = 'none';
+        }, 4000);
+    });
+
+    /* ==========================================================================
+       11. INITIALISATION
        ========================================================================== */
     const sessionUser = getCurrentUser();
     if (sessionUser) {

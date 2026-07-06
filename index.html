@@ -11,6 +11,8 @@
 </head>
 <body>
 
+    <div id="toast-container" class="toast-container"></div>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo" id="nav-logo-link">
@@ -53,7 +55,7 @@
             <li><a href="#" class="sp-link" data-target="view-soon">Projets</a></li>
             <li><a href="#" class="sp-link" data-target="view-soon">Équipe</a></li>
             <li><a href="#" class="sp-link" data-target="view-soon">Messagerie</a></li>
-            <li><a href="#" class="sp-link" data-target="view-soon">Paramètres</a></li>
+            <li><a href="#" class="sp-link" data-target="view-settings">Paramètres</a></li>
             <li class="sp-logout-wrapper"><button class="sp-link logout-link" id="sp-btn-logout">Déconnexion</button></li>
         </ul>
         <div class="side-panel-footer">
@@ -72,7 +74,7 @@
             <h3 class="logout-modal-title">Déconnexion</h3>
             <p class="logout-modal-desc">Es-tu sûr(e) de vouloir te déconnecter de ton compte ?</p>
             <div class="logout-modal-actions">
-                <button class="btn btn-secondary btn-white" id="btn-cancel-logout" style="border: 1px solid #ccc; box-shadow: none;">Annuler</button>
+                <button class="btn btn-secondary btn-white" id="btn-cancel-logout" style="border: 1px solid var(--border-color); box-shadow: none;">Annuler</button>
                 <button class="btn btn-primary btn-blue" id="btn-confirm-logout">Déconnexion</button>
             </div>
         </div>
@@ -129,21 +131,21 @@
                 <section id="collaborer" class="presentation-section scroll-reveal" style="background: var(--clr-red); color: white;">
                     <div class="container">
                         <h2 class="section-headline" style="color: white;">Collaborations (Placeholder)</h2>
-                        <p class="section-paragraph">Cette section affichera bientôt les projets en cours.</p>
+                        <p class="section-paragraph" style="color: rgba(255,255,255,0.9);">Cette section affichera bientôt les projets en cours.</p>
                     </div>
                 </section>
                 
-                <section id="evenements" class="presentation-section scroll-reveal" style="background: white;">
+                <section id="evenements" class="presentation-section scroll-reveal">
                     <div class="container">
                         <h2 class="section-headline">Événements (Placeholder)</h2>
-                        <p class="section-paragraph" style="color: var(--clr-text-muted);">Cette section affichera bientôt les événements communautaires.</p>
+                        <p class="section-paragraph">Cette section affichera bientôt les événements communautaires.</p>
                     </div>
                 </section>
                 
                 <section id="discord" class="presentation-section scroll-reveal" style="background: var(--clr-red-dark); color: white;">
                     <div class="container">
                         <h2 class="section-headline" style="color: white;">Rejoins-nous sur Discord</h2>
-                        <p class="section-paragraph">Rejoins la communauté la plus active de créateurs.</p>
+                        <p class="section-paragraph" style="color: rgba(255,255,255,0.9);">Rejoins la communauté la plus active de créateurs.</p>
                     </div>
                 </section>
             </main>
@@ -195,7 +197,7 @@
                             <label>Photo de profil</label>
                             <div class="avatar-upload-zone" id="edit-avatar-trigger">
                                 <div class="avatar-circle" id="edit-avatar-preview">📸</div>
-                                <p class="text-link mt-2 text-sm" style="color: var(--clr-text-dark);">Changer la photo</p>
+                                <p class="text-link mt-2 text-sm" style="color: var(--text-primary);">Changer la photo</p>
                                 <input type="file" id="edit-avatar-input" accept="image/*" style="display: none;">
                             </div>
                         </div>
@@ -231,19 +233,102 @@
 
                         <div class="form-group">
                             <label>Tes liens (YouTube, Twitch, X...)</label>
-                            <input type="url" id="edit-link-1" class="form-input dark-input mb-2" placeholder="Lien 1">
-                            <input type="url" id="edit-link-2" class="form-input dark-input mb-2" placeholder="Lien 2">
-                            <input type="url" id="edit-link-3" class="form-input dark-input" placeholder="Lien 3">
+                            <div id="edit-links-container"></div>
+                            <button type="button" id="btn-add-link" class="btn btn-secondary btn-white mt-2 text-sm" style="padding: 8px 16px; border: 1px solid var(--border-color); box-shadow:none;">+ Ajouter un lien</button>
+                            <p id="links-limit-msg" class="text-muted mt-1" style="display:none; font-size:0.85rem; color:var(--clr-red);">Limite de 10 liens atteinte.</p>
                         </div>
 
                         <div id="edit-error" class="error-message" style="display: none;"></div>
                         <div id="edit-success" class="success-message" style="display: none;">Profil sauvegardé avec succès !</div>
 
-                        <div class="form-actions" style="display: flex; gap: 15px;">
-                            <button type="button" class="btn btn-secondary btn-white btn-full" id="btn-cancel-edit" style="border: 1px solid #ccc;">Annuler</button>
+                        <div class="form-actions" style="display: flex; gap: 15px; margin-top: 30px;">
+                            <button type="button" class="btn btn-secondary btn-white btn-full" id="btn-cancel-edit" style="border: 1px solid var(--border-color); box-shadow:none;">Annuler</button>
                             <button type="submit" class="btn btn-primary btn-blue btn-full">Sauvegarder</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-settings" class="app-view">
+            <div class="container" style="padding-top: 120px; padding-bottom: 60px;">
+                <h1 class="page-title" style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 30px; text-align: center;">Paramètres</h1>
+                
+                <div class="profile-grid">
+                    <aside class="profile-sidebar">
+                        <div class="profile-card" style="padding: 10px;">
+                            <ul class="settings-nav">
+                                <li><button class="settings-tab active" data-tab="settings-appearance">Apparence</button></li>
+                                <li><button class="settings-tab unimplemented" data-tab="settings-notifications">Notifications</button></li>
+                                <li><button class="settings-tab unimplemented" data-tab="settings-privacy">Confidentialité</button></li>
+                                <li><button class="settings-tab unimplemented" data-tab="settings-accessibility">Accessibilité</button></li>
+                                <li><button class="settings-tab" data-tab="settings-password">Mot de passe</button></li>
+                            </ul>
+                        </div>
+                    </aside>
+                    <section class="profile-content">
+                        
+                        <div id="settings-appearance" class="settings-section active-section">
+                            <div class="profile-card">
+                                <h3>Apparence</h3>
+                                <p class="text-muted" style="margin-bottom: 20px;">Personnalise le thème de l'interface selon tes préférences.</p>
+                                
+                                <div class="theme-options">
+                                    <label class="theme-card">
+                                        <input type="radio" name="theme-select" value="light">
+                                        <div class="theme-card-content">
+                                            <div class="theme-preview light-preview"></div>
+                                            <span>Clair</span>
+                                        </div>
+                                    </label>
+                                    <label class="theme-card">
+                                        <input type="radio" name="theme-select" value="dark">
+                                        <div class="theme-card-content">
+                                            <div class="theme-preview dark-preview"></div>
+                                            <span>Sombre</span>
+                                        </div>
+                                    </label>
+                                    <label class="theme-card">
+                                        <input type="radio" name="theme-select" value="auto">
+                                        <div class="theme-card-content">
+                                            <div class="theme-preview auto-preview"></div>
+                                            <span>Automatique</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="settings-password" class="settings-section">
+                            <div class="profile-card">
+                                <h3>Changement du mot de passe</h3>
+                                <p class="text-muted" style="margin-bottom: 20px;">Assure-toi de choisir un mot de passe robuste et unique.</p>
+                                
+                                <form id="form-change-password">
+                                    <div class="form-group">
+                                        <label>Mot de passe actuel</label>
+                                        <input type="password" id="pwd-current" class="form-input dark-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nouveau mot de passe</label>
+                                        <input type="password" id="pwd-new" class="form-input dark-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Confirmation du nouveau mot de passe</label>
+                                        <input type="password" id="pwd-confirm" class="form-input dark-input" required>
+                                    </div>
+
+                                    <div id="pwd-error" class="error-message" style="display: none; white-space: pre-line;"></div>
+                                    <div id="pwd-success" class="success-message" style="display: none;">Mot de passe modifié avec succès !</div>
+
+                                    <div class="form-actions mt-4">
+                                        <button type="submit" class="btn btn-primary btn-blue">Mettre à jour</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </section>
                 </div>
             </div>
         </div>
