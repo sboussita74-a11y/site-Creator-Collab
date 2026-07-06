@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             target.classList.add('active-view');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        closeSidePanel(); // Ferme le panel si ouvert
+        closeSidePanel();
     }
 
     // Liens de la Navbar (Toujours accessibles)
@@ -108,21 +108,28 @@ document.addEventListener('DOMContentLoaded', () => {
     function openSidePanel() {
         sidePanel.classList.add('open');
         sidePanelOverlay.classList.add('show');
-        document.body.style.overflow = 'hidden';
     }
 
     function closeSidePanel() {
         sidePanel.classList.remove('open');
         sidePanelOverlay.classList.remove('show');
-        document.body.style.overflow = '';
     }
 
     document.getElementById('close-side-panel').addEventListener('click', closeSidePanel);
-    sidePanelOverlay.addEventListener('click', closeSidePanel);
+    
+    // Fermeture en cliquant en dehors du panneau (l'overlay ne bloque plus les clics)
+    document.addEventListener('click', (e) => {
+        if (sidePanel.classList.contains('open')) {
+            if (!sidePanel.contains(e.target) && !e.target.closest('#nav-logo-link') && !e.target.closest('#btn-nav-profile') && !e.target.closest('#logout-modal')) {
+                closeSidePanel();
+            }
+        }
+    });
 
     // Liens du panneau latéral
     document.querySelectorAll('.sp-link').forEach(link => {
         link.addEventListener('click', (e) => {
+            if (link.id === 'sp-btn-logout') return;
             e.preventDefault();
             const target = link.getAttribute('data-target');
             if (target === 'view-edit-profile') {
@@ -150,7 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateNavbarForUser(user) {
         const navCtaContainer = document.getElementById('nav-cta-container');
         
-        // Remplacer le bouton Connexion par le bouton Mon Profil (accès direct)
         navCtaContainer.innerHTML = `
             <button class="btn btn-white" id="btn-nav-profile" style="padding: 10px 20px;">
                 Mon Profil
@@ -197,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function openModal() { if(authModal) { authModal.classList.add('is-open'); document.body.style.overflow = 'hidden'; } }
     function closeModal() { if(authModal) { authModal.classList.remove('is-open'); document.body.style.overflow = ''; setTimeout(() => switchModalView('view-login'), 400); } }
     
-    // Attacher l'event si le bouton existe (avant connexion)
     const btnLoginInit = document.getElementById('btn-login');
     if(btnLoginInit) btnLoginInit.addEventListener('click', openModal);
     document.getElementById('close-modal').addEventListener('click', closeModal);
@@ -273,7 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setCurrentSession(email);
         closeModal();
         updateNavbarForUser(user);
-        switchView('view-home'); // Connecté, on reste sur l'accueil
+        switchView('view-home');
     });
 
     /* ==========================================================================
@@ -353,7 +358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('edit-link-2').value = user.links[1] || "";
         document.getElementById('edit-link-3').value = user.links[2] || "";
 
-        tempAvatar = user.avatar; // Préserver l'ancienne image
+        tempAvatar = user.avatar;
         const preview = document.getElementById('edit-avatar-preview');
         if(user.avatar) {
             preview.innerHTML = `<img src="${user.avatar}" alt="Avatar">`;
@@ -361,7 +366,6 @@ document.addEventListener('DOMContentLoaded', () => {
             preview.innerHTML = "📸";
         }
 
-        // Restauration visuelle des rôles
         document.querySelectorAll('#edit-roles .role-pill').forEach(pill => {
             if(user.roles && user.roles.includes(pill.textContent)) {
                 pill.classList.add('selected');
@@ -379,7 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const newHandle = document.getElementById('edit-handle').value.trim();
         
-        // Vérifier si le nouvel identifiant est pris par un autre
         const users = getUsers();
         const handleTaken = Object.entries(users).some(([email, u]) => u.handle === newHandle && email !== user.email);
         
@@ -390,11 +393,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Mise à jour de l'objet utilisateur
         user.name = document.getElementById('edit-name').value.trim();
         user.handle = newHandle;
         user.bio = document.getElementById('edit-bio').value.trim();
-        user.avatar = tempAvatar; // Sauvegarde la nouvelle image Base64
+        user.avatar = tempAvatar;
         
         const l1 = document.getElementById('edit-link-1').value.trim();
         const l2 = document.getElementById('edit-link-2').value.trim();
@@ -405,12 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         saveUser(user.email, user);
         
-        // Feedback visuel et mise à jour de l'UI
         errorDiv.style.display = 'none';
         successDiv.style.display = 'block';
         updateNavbarForUser(user);
 
-        // Disparaît après 2 secondes et retourne au profil
         setTimeout(() => {
             switchView('view-profile');
         }, 2000);
@@ -424,7 +424,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateNavbarForUser(sessionUser);
     }
     
-    // Par défaut, afficher la home
     switchView('view-home');
 
 });

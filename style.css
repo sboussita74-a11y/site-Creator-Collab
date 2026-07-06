@@ -52,7 +52,7 @@ body { font-family: var(--font-body); background-color: var(--clr-red); color: v
 /* ==========================================================================
    PANNEAU LATÉRAL & MODALE DÉCONNEXION
    ========================================================================== */
-.side-panel-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); z-index: 1001; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
+.side-panel-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.1); backdrop-filter: blur(1.5px); z-index: 1001; opacity: 0; visibility: hidden; transition: opacity 0.3s; pointer-events: none; }
 .side-panel-overlay.show { opacity: 1; visibility: visible; }
 
 .side-panel {
@@ -82,16 +82,16 @@ body { font-family: var(--font-body); background-color: var(--clr-red); color: v
 .side-panel-close { background: none; border: none; font-size: 2rem; color: rgba(255,255,255,0.7); cursor: pointer; transition: color 0.2s; line-height: 1; }
 .side-panel-close:hover { color: var(--clr-white); }
 
-.side-panel-nav { list-style: none; flex: 1; padding: 20px 0; overflow-y: auto; }
-.sp-link { display: block; padding: 14px 24px; color: rgba(255,255,255,0.9); text-decoration: none; font-size: 1.15rem; font-family: var(--font-heading); font-weight: 500; transition: background 0.2s, color 0.2s; border-left: 4px solid transparent; }
+.side-panel-nav { list-style: none; flex: 1; padding: 24px 0; overflow-y: auto; display: flex; flex-direction: column; }
+.side-panel-nav li { margin-bottom: 8px; }
+.sp-logout-wrapper { margin-top: auto; margin-bottom: 0 !important; }
+
+.sp-link { display: block; width: 100%; text-align: left; padding: 14px 24px; color: rgba(255,255,255,0.9); text-decoration: none; font-size: 1.15rem; font-family: var(--font-heading); font-weight: 500; transition: background 0.2s, color 0.2s, border-left-color 0.2s; border: none; border-left: 4px solid transparent; background: transparent; cursor: pointer; }
 .sp-link:hover { background: rgba(255,255,255,0.1); color: var(--clr-white); border-left-color: var(--clr-white); }
+.sp-link.logout-link:hover { background: rgba(42, 100, 255, 0.15); color: var(--clr-white); border-left-color: var(--clr-blue); }
 
-.side-panel-bottom-actions { padding: 0 24px 20px 24px; }
-.sp-logout-btn { background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.2); color: var(--clr-white); width: 100%; padding: 12px; border-radius: var(--radius-sm); font-family: var(--font-heading); font-size: 1rem; cursor: pointer; transition: all 0.2s; text-align: left; display: flex; align-items: center; gap: 8px; }
-.sp-logout-btn:hover { background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.4); }
-
-.side-panel-footer { padding: 20px 24px; border-top: 1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.08); border-radius: 0 0 var(--radius-md) var(--radius-md); }
-.user-card { display: flex; align-items: center; gap: 12px; }
+.side-panel-footer { padding: 16px 24px 24px 24px; background: transparent; }
+.user-card { display: flex; align-items: center; gap: 12px; background: var(--clr-red-dark); padding: 14px; border-radius: var(--radius-md); box-shadow: 0 6px 16px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.1); }
 .user-card-avatar { width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.2); background-size: cover; background-position: center; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.3); }
 .user-card-info { overflow: hidden; }
 .user-card-name { color: var(--clr-white); font-weight: 600; font-family: var(--font-heading); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -107,7 +107,6 @@ body { font-family: var(--font-body); background-color: var(--clr-red); color: v
 .logout-modal-actions { display: flex; gap: 15px; justify-content: center; }
 .logout-modal-actions .btn { flex: 1; }
 
-
 /* ==========================================================================
    VUES (Système de routing local)
    ========================================================================== */
@@ -117,16 +116,18 @@ body { font-family: var(--font-body); background-color: var(--clr-red); color: v
 
 /* HERO & ANIMATIONS */
 .hero { padding: 160px 24px 120px 24px; text-align: center; position: relative; background-color: var(--clr-red-hero); overflow: hidden; }
-.hero-rays { position: absolute; top: 50%; left: 50%; width: 3000px; height: 3000px; transform: translate(-50%, -50%); background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.08) 0deg, rgba(255,255,255,0.08) 3deg, transparent 3deg, transparent 11deg); mask-image: radial-gradient(circle at center, black 10%, transparent 50%); -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 50%); pointer-events: none; z-index: -1; animation: rotateRays 120s linear infinite; }
-@keyframes rotateRays { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+.hero-rays { position: absolute; top: 50%; left: 50%; width: 3000px; height: 3000px; transform: translate(-50%, -50%); background: repeating-conic-gradient(from 0deg, rgba(255,255,255,0.08) 0deg, rgba(255,255,255,0.08) 3deg, transparent 3deg, transparent 11deg); mask-image: radial-gradient(circle at center, black 10%, transparent 50%); -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 50%); pointer-events: none; z-index: -1; }
 .sparkle { position: absolute; width: 14px; height: 14px; filter: drop-shadow(0 0 6px rgba(255, 255, 255, 1)); z-index: 2; pointer-events: none; animation: floatSparkle 4s ease-in-out infinite alternate; }
 .sparkle::before { content: ''; display: block; width: 100%; height: 100%; background-color: var(--clr-white); clip-path: polygon(50% 0%, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0% 50%, 38% 38%); }
 @keyframes floatSparkle { 0% { transform: translateY(0) scale(1); } 100% { transform: translateY(-20px) scale(1.2); } }
 .sparkle-1 { top: 28%; left: 22%; } .sparkle-2 { top: 72%; right: 18%; animation-delay: 1s; } .sparkle-3 { top: 40%; right: 26%; animation-delay: 2s; }
 .hero-container { max-width: 950px; margin: 0 auto; position: relative; z-index: 3; }
-.hero-logo-frame { display: inline-block; position: relative; margin-top: 15px; margin-bottom: 30px; width: 200px; height: 200px; animation: floatLogo 6s ease-in-out infinite alternate; }
-@keyframes floatLogo { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
-.hero-logo { width: 100%; height: 100%; object-fit: cover; border-radius: 36px; border: 4px solid var(--clr-white); position: relative; z-index: 2; box-shadow: 0 0 35px rgba(255, 255, 255, 0.4); }
+
+.hero-logo-frame { display: inline-block; position: relative; margin-top: 15px; margin-bottom: 30px; width: 200px; height: 200px; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.hero-logo { width: 100%; height: 100%; object-fit: cover; border-radius: 36px; border: 4px solid var(--clr-white); position: relative; z-index: 2; box-shadow: none; transition: box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.hero-logo-frame:hover { transform: scale(1.03) rotate(2deg); }
+.hero-logo-frame:hover .hero-logo { box-shadow: 0 0 35px rgba(255, 255, 255, 0.5); }
+
 .hero-title { font-family: var(--font-heading); font-size: 3.8rem; font-weight: 700; line-height: 1.15; letter-spacing: -1px; margin-bottom: 24px; }
 .highlight-text { background: linear-gradient(transparent 60%, rgba(255, 255, 255, 0.2) 40%); display: inline-block; }
 .hero-subtitle { font-size: 1.25rem; color: rgba(255, 255, 255, 0.95); max-width: 750px; margin: 0 auto 48px auto; line-height: 1.6; }
