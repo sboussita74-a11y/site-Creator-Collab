@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const saved = localStorage.getItem('creatorCollabTheme') || 'light';
         applyTheme(saved);
         
-        // Coche la bonne option dans les paramètres si la page charge
         const radio = document.querySelector(`input[name="theme-select"][value="${saved}"]`);
         if(radio) radio.checked = true;
     }
@@ -74,13 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
         toast.textContent = message;
         toastContainer.appendChild(toast);
         
-        // Trigger reflow pour l'animation
         void toast.offsetWidth; 
         toast.classList.add('show');
         
         setTimeout(() => {
             toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 400); // Attend fin animation css
+            setTimeout(() => toast.remove(), 400); 
         }, 3000);
     }
 
@@ -117,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
         closeSidePanel();
     }
 
-    // Liens de la Navbar (Toujours accessibles)
     document.querySelectorAll('.nav-menu .nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -135,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Clic sur le logo Creator Collab
     document.getElementById('nav-logo-link').addEventListener('click', (e) => {
         e.preventDefault();
         const user = getCurrentUser();
@@ -146,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Boutons internes
     const btnBackHome = document.getElementById('btn-back-home');
     if(btnBackHome) btnBackHome.addEventListener('click', () => switchView('view-home'));
     
@@ -177,6 +172,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('close-side-panel').addEventListener('click', closeSidePanel);
     
+    // Logo du side panel ramène à l'accueil
+    document.getElementById('sp-logo-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        closeSidePanel();
+        switchView('view-home');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
     document.addEventListener('click', (e) => {
         if (sidePanel.classList.contains('open')) {
             if (!sidePanel.contains(e.target) && !e.target.closest('#nav-logo-link') && !e.target.closest('#btn-nav-profile') && !e.target.closest('#logout-modal')) {
@@ -387,8 +390,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================================================
        9. EDITION DU PROFIL & LIENS DYNAMIQUES
        ========================================================================== */
-    
-    // Système de liens dynamiques
     let editLinksData = [];
     const maxLinks = 10;
     const linksContainer = document.getElementById('edit-links-container');
@@ -451,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('edit-bio').value = user.bio || "";
         
         editLinksData = user.links ? [...user.links] : [];
-        if (editLinksData.length === 0) editLinksData.push(''); // Au moins un champ vide par défaut
+        if (editLinksData.length === 0) editLinksData.push('');
         renderEditLinks();
 
         tempAvatar = user.avatar;
@@ -494,7 +495,6 @@ document.addEventListener('DOMContentLoaded', () => {
         user.bio = document.getElementById('edit-bio').value.trim();
         user.avatar = tempAvatar;
         
-        // Nettoyer les liens vides
         user.links = editLinksData.map(l => l.trim()).filter(l => l !== "");
 
         user.roles = Array.from(document.querySelectorAll('#edit-roles .role-pill.selected')).map(p => p.textContent);
@@ -511,12 +511,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     /* ==========================================================================
-       10. PARAMÈTRES (Tabs & Mot de passe)
+       10. PARAMÈTRES (Tabs horizontales & Mot de passe)
        ========================================================================== */
     const settingsTabs = document.querySelectorAll('.settings-tab');
     
     settingsTabs.forEach(tab => {
-        tab.addEventListener('click', (e) => {
+        tab.addEventListener('click', () => {
             if (tab.classList.contains('unimplemented')) {
                 showToast('Cette fonctionnalité sera bientôt disponible.');
                 return;
@@ -531,7 +531,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Formulaire changement de mot de passe
     document.getElementById('form-change-password').addEventListener('submit', (e) => {
         e.preventDefault();
         const user = getCurrentUser();
@@ -571,7 +570,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Sauvegarde
         user.password = newPwd;
         saveUser(user.email, user);
         

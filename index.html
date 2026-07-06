@@ -16,7 +16,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="#" class="nav-logo" id="nav-logo-link">
-                <img src="image_cb2c45.jpg" alt="Creator Collab" class="nav-logo-img" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
+                <img src="image_cb2c45.jpg" alt="Creator Collab" class="nav-logo-img glow-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
                 <span class="logo-text">Creator<span>Collab</span></span>
             </a>
             
@@ -43,10 +43,10 @@
     <div class="side-panel-overlay" id="side-panel-overlay"></div>
     <aside class="side-panel" id="side-panel">
         <div class="side-panel-header">
-            <div class="sp-logo-wrapper">
-                <img src="image_cb2c45.jpg" alt="Creator Collab" class="sp-logo-img" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
+            <a href="#" class="sp-logo-wrapper" id="sp-logo-link" style="text-decoration: none; color: inherit;">
+                <img src="image_cb2c45.jpg" alt="Creator Collab" class="sp-logo-img glow-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
                 <span class="sp-logo-text">Creator<span>Collab</span></span>
-            </div>
+            </a>
             <button class="side-panel-close" id="close-side-panel">&times;</button>
         </div>
         <ul class="side-panel-nav">
@@ -91,7 +91,7 @@
                 <div class="hero-container">
                     <div class="hero-logo-frame reveal">
                         <div class="hero-rays"></div>
-                        <img src="image_cb2c45.jpg" alt="Creator Collab Logo Officiel" class="hero-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
+                        <img src="image_cb2c45.jpg" alt="Creator Collab Logo Officiel" class="hero-logo glow-logo" onerror="this.src='https://imgur.com/ZYOXXJ2.jpg';">
                     </div>
                     
                     <h1 class="hero-title reveal">
@@ -254,45 +254,62 @@
             <div class="container" style="padding-top: 120px; padding-bottom: 60px;">
                 <h1 class="page-title" style="font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 30px; text-align: center;">Paramètres</h1>
                 
-                <div class="profile-grid">
-                    <aside class="profile-sidebar">
-                        <div class="profile-card" style="padding: 10px;">
-                            <ul class="settings-nav">
-                                <li><button class="settings-tab active" data-tab="settings-appearance">Apparence</button></li>
-                                <li><button class="settings-tab unimplemented" data-tab="settings-notifications">Notifications</button></li>
-                                <li><button class="settings-tab unimplemented" data-tab="settings-privacy">Confidentialité</button></li>
-                                <li><button class="settings-tab unimplemented" data-tab="settings-accessibility">Accessibilité</button></li>
-                                <li><button class="settings-tab" data-tab="settings-password">Mot de passe</button></li>
-                            </ul>
-                        </div>
-                    </aside>
-                    <section class="profile-content">
+                <div class="settings-container">
+                    <div class="settings-nav-horizontal">
+                        <button class="settings-tab active" data-tab="settings-appearance">Apparence</button>
+                        <button class="settings-tab unimplemented" data-tab="settings-notifications">Notifications</button>
+                        <button class="settings-tab unimplemented" data-tab="settings-privacy">Confidentialité</button>
+                        <button class="settings-tab unimplemented" data-tab="settings-accessibility">Accessibilité</button>
+                        <button class="settings-tab" data-tab="settings-password">Mot de passe</button>
+                    </div>
+
+                    <section class="settings-content-area">
                         
                         <div id="settings-appearance" class="settings-section active-section">
                             <div class="profile-card">
                                 <h3>Apparence</h3>
-                                <p class="text-muted" style="margin-bottom: 20px;">Personnalise le thème de l'interface selon tes préférences.</p>
+                                <p class="text-muted" style="margin-bottom: 30px;">Personnalise le thème de l'interface selon tes préférences.</p>
                                 
                                 <div class="theme-options">
                                     <label class="theme-card">
                                         <input type="radio" name="theme-select" value="light">
                                         <div class="theme-card-content">
-                                            <div class="theme-preview light-preview"></div>
-                                            <span>Clair</span>
+                                            <div class="theme-preview light-preview">
+                                                <div class="preview-header"></div>
+                                                <div class="preview-body">
+                                                    <div class="preview-line"></div>
+                                                    <div class="preview-line short"></div>
+                                                </div>
+                                            </div>
+                                            <span class="theme-title">Clair</span>
                                         </div>
                                     </label>
+                                    
                                     <label class="theme-card">
                                         <input type="radio" name="theme-select" value="dark">
                                         <div class="theme-card-content">
-                                            <div class="theme-preview dark-preview"></div>
-                                            <span>Sombre</span>
+                                            <div class="theme-preview dark-preview">
+                                                <div class="preview-header"></div>
+                                                <div class="preview-body">
+                                                    <div class="preview-line"></div>
+                                                    <div class="preview-line short"></div>
+                                                </div>
+                                            </div>
+                                            <span class="theme-title">Sombre</span>
                                         </div>
                                     </label>
+
                                     <label class="theme-card">
                                         <input type="radio" name="theme-select" value="auto">
                                         <div class="theme-card-content">
-                                            <div class="theme-preview auto-preview"></div>
-                                            <span>Automatique</span>
+                                            <div class="theme-preview auto-preview">
+                                                <div class="preview-header"></div>
+                                                <div class="preview-body">
+                                                    <div class="preview-line"></div>
+                                                    <div class="preview-line short"></div>
+                                                </div>
+                                            </div>
+                                            <span class="theme-title">Automatique</span>
                                         </div>
                                     </label>
                                 </div>
