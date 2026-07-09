@@ -74,7 +74,7 @@ body { font-family: var(--font-body); background-color: var(--clr-red); color: #
 .nav-container { display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
 .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #ffffff; padding: 4px; cursor: pointer; }
 .nav-logo-img { height: 34px; width: auto; border-radius: 8px; border: 2px solid #ffffff; }
-.logo-text { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.5px; }
+.logo-text { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.5px; display: none; } /* Hidden on mobile */
 .logo-text span { opacity: 0.8; }
 .nav-menu { display: flex; list-style: none; gap: 32px; }
 .nav-link { text-decoration: none; color: rgba(255, 255, 255, 0.9); font-weight: 500; font-size: 0.95rem; transition: var(--transition-smooth); }
@@ -365,15 +365,31 @@ body.dark-theme .avatar-upload-zone:hover .avatar-circle { border-color: var(--c
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+    /* Mêmes ajustements que la version pc, pour pas avoir les deux logos text.  Caché de base maintenant, juste pour assurer */
+    .logo-text { display: none; }
+    
     .navbar { width: 100%; margin-top: 0; border-radius: 0; }
     .nav-menu { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--clr-red); flex-direction: column; padding: 24px; gap: 16px; }
     .nav-menu.mobile-open { display: flex; }
-    .menu-toggle { display: flex; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
-    .menu-toggle .bar { width: 25px; height: 3px; background-color: #ffffff; border-radius: 2px; }
-    .nav-cta { display: none; }
+    .menu-toggle { display: none; /* Remplacé par les boutons CTA complets sur mobile aussi selon demande */ }
+    
+    .nav-cta { display: block; } /* On s'assure qu'il est visible sur mobile */
+    .btn-connexion { font-size: 0.85rem; padding: 8px 16px; } /* Un peu plus petit sur mobile */
+    #btn-nav-profile { font-size: 0.85rem; padding: 8px 16px; }
+    
+    /* Hero ajustements pour mobile */
+    .hero { padding: 120px 20px 80px 20px; }
+    .hero-logo-frame { width: 160px; height: 160px; }
+    .hero-title { font-size: 2.5rem; }
+    .hero-rays { transform: translate(-50%, -50%) scale(1.5); } /* Adapter les rayons pour l'écran vertical */
+    
     .profile-grid { grid-template-columns: 1fr; }
     .profile-container { flex-direction: column; text-align: center; }
     .form-group-row { grid-template-columns: 1fr; }
     .side-panel { left: -110%; top: 0; height: 100vh; width: 85%; border-radius: 0; }
     .side-panel.open { left: 0; }
+    
+    /* Profile Mobile Spécifiques */
+    .smart-links-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .roles-grid { justify-content: center; }
 }
